@@ -1,0 +1,21 @@
+id: OWASP-LLM
+name: OWASP Top 10 for LLM Applications 2026
+short: OWASP LLM
+kind: risk
+version: "2026 (v1.0, August 2026)"
+source_url: https://genai.owasp.org/
+licence_note: >-
+  Risk names from the OWASP GenAI Security Project (published under CC BY-SA 4.0).
+  Descriptions are paraphrased for this project. 2025 identifiers are kept in
+  `legacy_id` so older mappings still resolve.
+items:
+  - {id: LLM01, title: "Prompt Injection", legacy_id: "LLM01:2025", description: "Crafted inputs (direct, indirect or cross-modal) override the model's intended instructions."}
+  - {id: LLM02, title: "Sensitive Information Disclosure", legacy_id: "LLM02:2025", description: "The application reveals personal, confidential or proprietary data through model output."}
+  - {id: LLM03, title: "Excessive Agency", legacy_id: "LLM06:2025", description: "The model is given more functionality, permissions or autonomy than the task needs."}
+  - {id: LLM04, title: "Supply Chain", legacy_id: "LLM03:2025", description: "Third-party models, datasets, plugins or libraries introduce weaknesses."}
+  - {id: LLM05, title: "Data and Model Poisoning", legacy_id: "LLM04:2025", description: "Training, fine-tuning or embedding data is manipulated to plant bias or backdoors."}
+  - {id: LLM06, title: "Unbounded Consumption", legacy_id: "LLM10:2025", description: "Uncontrolled inference use causes denial of service, cost blow-outs or model extraction."}
+  - {id: LLM07, title: "Misinformation", legacy_id: "LLM09:2025", description: "The model produces false or misleading content that users act on."}
+  - {id: LLM08, title: "Hidden Context Exposure", legacy_id: "LLM07:2025", description: "Non-user-facing context such as system prompts or hidden instructions can be extracted."}
+  - {id: LLM09, title: "Vector and Embedding Weaknesses", legacy_id: "LLM08:2025", description: "Weaknesses in RAG pipelines and vector stores allow leakage or manipulation."}
+  - {id: LLM10, title: "Improper Output Handling", legacy_id: "LLM05:2025", description: "Model output is passed downstream without validation, enabling injection or code execution."}

@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Control Crosswalk</title>
+<meta name="description" content="Unified AI controls mapped across the MIT AI Risk Repository, OWASP GenAI, OECD AI Principles, ISO/IEC 42001 and the EU AI Act.">
+<style>
+:root {
+  --bg: #f6f7f9; --surface: #ffffff; --surface-2: #f0f2f5; --border: #dde1e7;
+  --text: #17202b; --muted: #5b6676; --accent: #1f5fbf; --accent-soft: #e6effb;
+  --danger: #b4232c; --danger-soft: #fbe9ea; --ok: #1d7a46;
+  --hi: #b4232c; --med: #b86e00; --lo: #5b6676;
+  --fw-MIT: #6d4bd8; --fw-OWASP-LLM: #c2410c; --fw-OWASP-ASI: #be185d;
+  --fw-OECD: #0f766e; --fw-ISO42001: #1d4ed8; --fw-EUAIA: #a16207;
+  --heat-0: #fbe9ea; --heat-1: #dbe8fb; --heat-2: #a9c6f2; --heat-3: #6d9ee6; --heat-4: #2f6fd1;
+  --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+  --radius: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141b; --surface: #161d27; --surface-2: #1d2633; --border: #2b3645;
+    --text: #e6ebf2; --muted: #98a4b5; --accent: #6ea8ff; --accent-soft: #1b2a42;
+    --danger: #ff7b84; --danger-soft: #3a1d22; --ok: #4ccf8a;
+    --hi: #ff7b84; --med: #f0b35a; --lo: #98a4b5;
+    --fw-MIT: #a78bfa; --fw-OWASP-LLM: #fb923c; --fw-OWASP-ASI: #f472b6;
+    --fw-OECD: #2dd4bf; --fw-ISO42001: #60a5fa; --fw-EUAIA: #facc15;
+    --heat-0: #3a1d22; --heat-1: #1c2a3f; --heat-2: #24406a; --heat-3: #2f5d9e; --heat-4: #4d86dc;
+    --shadow: none; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141b; --surface: #161d27; --surface-2: #1d2633; --border: #2b3645;
+  --text: #e6ebf2; --muted: #98a4b5; --accent: #6ea8ff; --accent-soft: #1b2a42;
+  --danger: #ff7b84; --danger-soft: #3a1d22; --ok: #4ccf8a;
+  --hi: #ff7b84; --med: #f0b35a; --lo: #98a4b5;
+  --fw-MIT: #a78bfa; --fw-OWASP-LLM: #fb923c; --fw-OWASP-ASI: #f472b6;
+  --fw-OECD: #2dd4bf; --fw-ISO42001: #60a5fa; --fw-EUAIA: #facc15;
+  --heat-0: #3a1d22; --heat-1: #1c2a3f; --heat-2: #24406a; --heat-3: #2f5d9e; --heat-4: #4d86dc;
+  --shadow: none; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--accent); }
+button, select, input { font: inherit; color: inherit; }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 0 16px; }
+
+header.top { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
+.top-row { display: flex; align-items: center; gap: 16px; padding: 14px 0 8px; flex-wrap: wrap; }
+.brand h1 { font-size: 18px; margin: 0; letter-spacing: -.01em; }
+.brand p { margin: 0; color: var(--muted); font-size: 12.5px; }
+.spacer { flex: 1; }
+.icon-btn { background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+nav.tabs { display: flex; gap: 2px; overflow-x: auto; }
+nav.tabs button { background: none; border: 0; border-bottom: 2px solid transparent; padding: 8px 12px; cursor: pointer; color: var(--muted); white-space: nowrap; font-weight: 500; }
+nav.tabs button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+
+.filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; padding: 14px 0 4px; }
+.filters label { display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+.filters select, .filters input { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 7px 9px; min-width: 150px; text-transform: none; letter-spacing: 0; font-weight: 400; font-size: 13.5px; }
+.filters input[type=search] { min-width: 220px; }
+.filter-note { font-size: 12.5px; color: var(--muted); padding-bottom: 8px; }
+
+main { padding: 12px 0 48px; }
+section.view { display: none; }
+section.view.active { display: block; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; }
+.card h2 { font-size: 15px; margin: 0 0 4px; }
+.card .sub { color: var(--muted); font-size: 12.5px; margin: 0 0 12px; }
+.grid { display: grid; gap: 14px; }
+.kpis { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin-bottom: 14px; }
+.kpi .v { font-size: 28px; font-weight: 700; letter-spacing: -.02em; }
+.kpi .l { color: var(--muted); font-size: 12.5px; }
+.two { grid-template-columns: 1.3fr 1fr; }
+@media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
+
+.bar-row { display: grid; grid-template-columns: 120px 1fr 70px; gap: 10px; align-items: center; padding: 6px 0; cursor: pointer; }
+.bar-row:hover .bar-label { color: var(--accent); }
+.bar-track { background: var(--surface-2); border-radius: 6px; height: 14px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 6px; transition: width .3s ease; }
+.bar-val { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 12.5px; }
+.bar-label { font-weight: 600; font-size: 13px; }
+
+.fw-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+.fw-cards { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.fw-card { border-left: 4px solid var(--c); }
+.fw-card h3 { margin: 0; font-size: 14px; }
+.fw-card .meta { color: var(--muted); font-size: 12px; margin: 4px 0 8px; }
+
+.table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); max-height: 72vh; }
+table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 13px; }
+th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+thead th { position: sticky; top: 0; background: var(--surface-2); z-index: 2; font-size: 12px; white-space: nowrap; }
+tbody tr { cursor: pointer; }
+tbody tr:hover td { background: var(--accent-soft); }
+td.ctrl { min-width: 240px; position: sticky; left: 0; background: var(--surface); z-index: 1; }
+thead th.ctrl { position: sticky; left: 0; z-index: 3; }
+td.ctrl .id { font-weight: 700; font-variant-numeric: tabular-nums; }
+td.ctrl .t { display: block; color: var(--text); }
+td.ctrl .cat { display: block; color: var(--muted); font-size: 11.5px; }
+.chip { display: inline-block; padding: 1px 7px; margin: 0 4px 4px 0; border-radius: 999px; font-size: 11.5px; font-weight: 600; background: color-mix(in srgb, var(--c) 14%, transparent); color: var(--c); border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); white-space: nowrap; }
+.chip.hit { outline: 2px solid var(--c); }
+.prio { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
+.prio.high { color: var(--hi); } .prio.medium { color: var(--med); } .prio.low { color: var(--lo); }
+.toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+.toolbar .count { color: var(--muted); font-size: 12.5px; }
+.btn { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer; font-size: 13px; }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.seg button { background: var(--surface); border: 0; padding: 6px 10px; cursor: pointer; font-size: 12.5px; }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+
+.heat td.cell { text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; min-width: 64px; }
+.heat td.domain { background: var(--surface-2); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); cursor: default; }
+.heat td.risk { min-width: 280px; }
+.heat .rid { font-weight: 700; margin-right: 6px; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+.legend span.sw { width: 22px; height: 12px; border-radius: 3px; display: inline-block; border: 1px solid var(--border); }
+
+.pivot-controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; margin-bottom: 14px; }
+.pivot-controls label { display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.pivot-controls select { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 7px 9px; min-width: 200px; max-width: 360px; text-transform: none; font-weight: 400; letter-spacing: 0; }
+.flow { position: relative; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 56px; }
+@media (max-width: 760px) { .flow { grid-template-columns: 1fr; gap: 14px; } .flow svg { display: none; } }
+.flow-col h3 { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 0 0 8px; }
+.node { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--c, var(--accent)); border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; position: relative; z-index: 1; font-size: 13px; cursor: pointer; }
+.node:hover { border-color: var(--c, var(--accent)); }
+.node b { font-variant-numeric: tabular-nums; }
+.node small { display: block; color: var(--muted); }
+.flow svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: visible; }
+.flow svg path { fill: none; stroke: var(--border); stroke-width: 2; }
+.empty { color: var(--muted); font-style: italic; padding: 12px 0; }
+
+.gap-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.gap-item { padding: 8px 0; border-bottom: 1px dashed var(--border); }
+.gap-item:last-child { border-bottom: 0; }
+.gap-item b { margin-right: 6px; }
+.ok-msg { color: var(--ok); font-weight: 600; }
+.callout { background: var(--accent-soft); border-radius: 8px; padding: 10px 12px; font-size: 13px; margin-bottom: 14px; }
+
+.drawer-backdrop { position: fixed; inset: 0; background: rgba(10,15,25,.4); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 40; }
+.drawer { position: fixed; top: 0; right: 0; height: 100%; width: min(560px, 100%); background: var(--surface); border-left: 1px solid var(--border); transform: translateX(100%); transition: transform .25s ease; z-index: 50; overflow-y: auto; padding: 20px; }
+.drawer.open { transform: none; }
+.drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+.drawer h2 { margin: 0 0 4px; font-size: 18px; }
+.drawer h4 { margin: 18px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.drawer ul { margin: 0; padding-left: 18px; }
+.drawer .map-group { margin-bottom: 10px; }
+.drawer .map-group .item { font-size: 13px; padding: 2px 0; }
+.drawer .close { position: absolute; top: 14px; right: 14px; }
+.sector-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.sector-pill { border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-size: 12.5px; }
+footer { color: var(--muted); font-size: 12px; padding: 24px 0; border-top: 1px solid var(--border); }
+@media (max-width: 600px) {
+  .filters select, .filters input, .filters input[type=search] { min-width: 0; width: 100%; }
+  .filters label { flex: 1 1 140px; }
+  .bar-row { grid-template-columns: 90px 1fr 56px; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <div class="brand">
+        <h1>AI Control Crosswalk</h1>
+        <p>MIT AI Risk Repository · OWASP GenAI (LLM + Agentic) · OECD AI Principles · ISO/IEC 42001 · EU AI Act</p>
+      </div>
+      <div class="spacer"></div>
+      <button class="icon-btn" id="themeBtn" title="Toggle light / dark">◐ Theme</button>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-view="overview" aria-selected="true">Overview</button>
+      <button role="tab" data-view="matrix" aria-selected="false">Crosswalk matrix</button>
+      <button role="tab" data-view="heatmap" aria-selected="false">Risk heatmap</button>
+      <button role="tab" data-view="pivot" aria-selected="false">Pivot explorer</button>
+      <button role="tab" data-view="gaps" aria-selected="false">Gaps</button>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="filters">
+    <label>Sector <select id="fSector"><option value="">All sectors</option></select></label>
+    <label>Min. sector priority <select id="fPrio">
+      <option value="low">Any</option><option value="medium">Medium +</option><option value="high" selected>High only</option>
+    </select></label>
+    <label>Mitigation category <select id="fCat"><option value="">All categories</option></select></label>
+    <label>Search <input type="search" id="fSearch" placeholder="e.g. prompt, Art.14, A.6.2.4, bias"></label>
+    <button class="btn" id="resetBtn">Reset</button>
+  </div>
+  <div class="filter-note" id="filterNote"></div>
+</div>
+
+<main class="wrap">
+  <!-- OVERVIEW -->
+  <section class="view active" id="view-overview">
+    <div class="grid kpis" id="kpis"></div>
+    <div class="grid two">
+      <div class="card">
+        <h2>Framework coverage</h2>
+        <p class="sub">Share of each framework's items addressed by at least one control in the current filter. Click a bar to see its gaps.</p>
+        <div id="covBars"></div>
+      </div>
+      <div class="card">
+        <h2>Controls by mitigation category</h2>
+        <p class="sub">MIT AI Risk Mitigation Taxonomy top-level categories.</p>
+        <div id="catBars"></div>
+        <h2 style="margin-top:18px">High-priority controls by sector</h2>
+        <p class="sub">Controls rated high priority for each sector.</p>
+        <div id="sectorBars"></div>
+      </div>
+    </div>
+    <h2 style="font-size:15px;margin:22px 0 10px">Frameworks in this crosswalk</h2>
+    <div class="grid fw-cards" id="fwCards"></div>
+    <div class="card" style="margin-top:14px" id="sectorCard"></div>
+  </section>
+
+  <!-- MATRIX -->
+  <section class="view" id="view-matrix">
+    <div class="toolbar">
+      <span class="seg" id="matrixMode">
+        <button data-mode="ids" aria-pressed="true">Item IDs</button>
+        <button data-mode="count" aria-pressed="false">Counts</button>
+      </span>
+      <span class="count" id="matrixCount"></span>
+      <span class="spacer"></span>
+      <button class="btn" id="csvBtn">⬇ Export filtered CSV</button>
+    </div>
+    <div class="table-wrap"><table id="matrix"></table></div>
+  </section>
+
+  <!-- HEATMAP -->
+  <section class="view" id="view-heatmap">
+    <div class="callout">Each MIT risk subdomain (rows) is linked to other frameworks through the unified controls that treat it. Cells show how many distinct items in that framework are reached. <b>Red rows</b> are risks no control in the current filter treats. Click a row to see the controls.</div>
+    <div class="toolbar"><div class="legend" id="heatLegend"></div></div>
+    <div class="table-wrap"><table class="heat" id="heat"></table></div>
+  </section>
+
+  <!-- PIVOT -->
+  <section class="view" id="view-pivot">
+    <div class="callout">Pick any requirement or risk and a target framework to see how they connect. For example, <i>"Which ISO 42001 controls help evidence EU AI Act Art. 14 human oversight?"</i></div>
+    <div class="pivot-controls">
+      <label>From framework <select id="pFromFw"></select></label>
+      <label>Item <select id="pFromItem"></select></label>
+      <label>To framework <select id="pToFw"></select></label>
+      <button class="btn" id="pSwap" title="Swap direction">⇄ Swap</button>
+    </div>
+    <div class="card"><div class="flow" id="flow"></div></div>
+  </section>
+
+  <!-- GAPS -->
+  <section class="view" id="view-gaps">
+    <div class="callout" id="gapIntro"></div>
+    <div class="grid gap-grid" id="gapGrid"></div>
+  </section>
+</main>
+
+<div class="wrap"><footer id="footer"></footer></div>
+
+<div class="drawer-backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <button class="btn close" id="drawerClose">✕ Close</button>
+  <div id="drawerBody"></div>
+</aside>
+
+<script>
+const EMBEDDED = {"meta": {"dataset_version": "1.0.0", "tool_version": "1.0.0", "built": "2026-10-21"}, "framework_order": ["MIT", "OWASP-LLM", "OWASP-ASI", "OECD", "ISO42001", "EUAIA"], "frameworks": {"EUAIA": {"id": "EUAIA", "name": "EU AI Act - Regulation (EU) 2024/1689 (selected articles)", "short": "EU AI Act", "kind": "regulation", "version": "Regulation (EU) 2024/1689 - selected obligation articles", "source_url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj", "licence_note": "Article numbers and short titles only; summaries are paraphrased. Application dates are deliberately not hard-coded because they have been subject to amendment proposals - check the Official Journal for the current position.", "items": [{"id": "Art.4", "group": "General", "title": "AI literacy", "description": "Providers and deployers ensure staff have sufficient AI literacy."}, {"id": "Art.5", "group": "Prohibited practices", "title": "Prohibited AI practices", "description": "Bans specified practices such as manipulative techniques and social scoring."}, {"id": "Art.6", "group": "High-risk classification", "title": "Classification rules for high-risk AI systems", "description": "When an AI system counts as high-risk (Annex I products, Annex III use cases)."}, {"id": "Art.9", "group": "High-risk requirements", "title": "Risk management system", "description": "Continuous, iterative risk management across the lifecycle."}, {"id": "Art.10", "group": "High-risk requirements", "title": "Data and data governance", "description": "Quality, relevance, representativeness and bias examination of data sets."}, {"id": "Art.11", "group": "High-risk requirements", "title": "Technical documentation", "description": "Documentation demonstrating compliance, kept up to date."}, {"id": "Art.12", "group": "High-risk requirements", "title": "Record-keeping", "description": "Automatic logging of events over the system's lifetime."}, {"id": "Art.13", "group": "High-risk requirements", "title": "Transparency and provision of information to deployers", "description": "Instructions for use enabling deployers to interpret and use outputs."}, {"id": "Art.14", "group": "High-risk requirements", "title": "Human oversight", "description": "Design enabling effective oversight by natural persons, including the ability to intervene."}, {"id": "Art.15", "group": "High-risk requirements", "title": "Accuracy, robustness and cybersecurity", "description": "Appropriate accuracy, resilience and protection against attacks such as poisoning."}, {"id": "Art.17", "group": "Provider obligations", "title": "Quality management system", "description": "Documented QMS covering policies, procedures and accountability."}, {"id": "Art.25", "group": "Value chain", "title": "Responsibilities along the AI value chain", "description": "When distributors, importers or deployers take on provider obligations; cooperation duties."}, {"id": "Art.26", "group": "Deployer obligations", "title": "Obligations of deployers of high-risk AI systems", "description": "Use per instructions, assign human oversight, monitor and keep logs."}, {"id": "Art.27", "group": "Deployer obligations", "title": "Fundamental rights impact assessment", "description": "Certain deployers assess impacts on fundamental rights before use."}, {"id": "Art.50", "group": "Transparency", "title": "Transparency obligations for certain AI systems", "description": "Disclose AI interaction and mark synthetic or deepfake content."}, {"id": "Art.53", "group": "General-purpose AI", "title": "Obligations for providers of general-purpose AI models", "description": "Technical documentation, downstream information and copyright policy."}, {"id": "Art.55", "group": "General-purpose AI", "title": "Obligations for GPAI models with systemic risk", "description": "Model evaluation, adversarial testing, incident reporting and cybersecurity."}, {"id": "Art.72", "group": "Post-market", "title": "Post-market monitoring", "description": "Providers collect and analyse performance data after placing on the market."}, {"id": "Art.73", "group": "Post-market", "title": "Reporting of serious incidents", "description": "Providers report serious incidents to market surveillance authorities."}]}, "ISO42001": {"id": "ISO42001", "name": "ISO/IEC 42001:2023 - Annex A Reference Controls", "short": "ISO 42001", "kind": "control", "version": "2023 (38 Annex A controls, A.2-A.10)", "source_url": "https://www.iso.org/standard/81230.html", "licence_note": "Control identifiers and short titles only. The standard's control text is copyrighted by ISO/IEC and is not reproduced here; descriptions are brief paraphrases. Buy the standard for the authoritative wording.", "items": [{"id": "A.2.2", "group": "A.2 Policies related to AI", "title": "AI policy", "description": "Documented policy for developing or using AI systems."}, {"id": "A.2.3", "group": "A.2 Policies related to AI", "title": "Alignment with other organisational policies", "description": "AI policy aligned with security, privacy, quality and other policies."}, {"id": "A.2.4", "group": "A.2 Policies related to AI", "title": "Review of the AI policy", "description": "Policy reviewed at planned intervals for continued suitability."}, {"id": "A.3.2", "group": "A.3 Internal organisation", "title": "AI roles and responsibilities", "description": "Roles and responsibilities for AI defined and allocated."}, {"id": "A.3.3", "group": "A.3 Internal organisation", "title": "Reporting of concerns", "description": "A way for people to raise concerns about AI systems."}, {"id": "A.4.2", "group": "A.4 Resources for AI systems", "title": "Resource documentation", "description": "Resources needed across the AI lifecycle identified and documented."}, {"id": "A.4.3", "group": "A.4 Resources for AI systems", "title": "Data resources", "description": "Data resources used by AI systems documented."}, {"id": "A.4.4", "group": "A.4 Resources for AI systems", "title": "Tooling resources", "description": "Tools used for AI systems documented."}, {"id": "A.4.5", "group": "A.4 Resources for AI systems", "title": "System and computing resources", "description": "Compute and system resources documented."}, {"id": "A.4.6", "group": "A.4 Resources for AI systems", "title": "Human resources", "description": "People and competences needed for AI documented."}, {"id": "A.5.2", "group": "A.5 Assessing impacts of AI systems", "title": "AI system impact assessment process", "description": "Process for assessing potential consequences of AI systems."}, {"id": "A.5.3", "group": "A.5 Assessing impacts of AI systems", "title": "Documentation of AI system impact assessments", "description": "Impact assessment results documented and retained."}, {"id": "A.5.4", "group": "A.5 Assessing impacts of AI systems", "title": "Assessing AI system impact on individuals or groups", "description": "Impacts on individuals and groups assessed."}, {"id": "A.5.5", "group": "A.5 Assessing impacts of AI systems", "title": "Assessing societal impacts of AI systems", "description": "Wider societal impacts assessed."}, {"id": "A.6.1.2", "group": "A.6 AI system life cycle", "title": "Objectives for responsible development of AI system", "description": "Responsible-development objectives set and integrated into the lifecycle."}, {"id": "A.6.1.3", "group": "A.6 AI system life cycle", "title": "Processes for responsible AI system design and development", "description": "Defined processes for responsible design and development."}, {"id": "A.6.2.2", "group": "A.6 AI system life cycle", "title": "AI system requirements and specification", "description": "Requirements for new or changed AI systems specified."}, {"id": "A.6.2.3", "group": "A.6 AI system life cycle", "title": "Documentation of AI system design and development", "description": "Design and development decisions documented."}, {"id": "A.6.2.4", "group": "A.6 AI system life cycle", "title": "AI system verification and validation", "description": "Verification and validation measures defined and applied."}, {"id": "A.6.2.5", "group": "A.6 AI system life cycle", "title": "AI system deployment", "description": "Deployment plan and readiness criteria."}, {"id": "A.6.2.6", "group": "A.6 AI system life cycle", "title": "AI system operation and monitoring", "description": "Operation and monitoring requirements defined."}, {"id": "A.6.2.7", "group": "A.6 AI system life cycle", "title": "AI system technical documentation", "description": "Technical documentation for relevant parties."}, {"id": "A.6.2.8", "group": "A.6 AI system life cycle", "title": "AI system recording of event logs", "description": "Event logging enabled at appropriate lifecycle phases."}, {"id": "A.7.2", "group": "A.7 Data for AI systems", "title": "Data for development and enhancement of AI system", "description": "Data management processes for AI development."}, {"id": "A.7.3", "group": "A.7 Data for AI systems", "title": "Acquisition of data", "description": "Details of how data is acquired and selected."}, {"id": "A.7.4", "group": "A.7 Data for AI systems", "title": "Quality of data for AI systems", "description": "Data quality requirements defined and met."}, {"id": "A.7.5", "group": "A.7 Data for AI systems", "title": "Data provenance", "description": "Provenance of data recorded across its lifecycle."}, {"id": "A.7.6", "group": "A.7 Data for AI systems", "title": "Data preparation", "description": "Criteria and methods for preparing data."}, {"id": "A.8.2", "group": "A.8 Information for interested parties", "title": "System documentation and information for users", "description": "Information users need about the AI system."}, {"id": "A.8.3", "group": "A.8 Information for interested parties", "title": "External reporting", "description": "Ways for interested parties to report adverse impacts."}, {"id": "A.8.4", "group": "A.8 Information for interested parties", "title": "Communication of incidents", "description": "Plan for communicating AI incidents."}, {"id": "A.8.5", "group": "A.8 Information for interested parties", "title": "Information for interested parties", "description": "Obligations to report AI information to interested parties."}, {"id": "A.9.2", "group": "A.9 Use of AI systems", "title": "Processes for responsible use of AI systems", "description": "Processes for responsible use defined."}, {"id": "A.9.3", "group": "A.9 Use of AI systems", "title": "Objectives for responsible use of AI system", "description": "Objectives guiding responsible use."}, {"id": "A.9.4", "group": "A.9 Use of AI systems", "title": "Intended use of the AI system", "description": "AI used according to its intended use and documentation."}, {"id": "A.10.2", "group": "A.10 Third-party and customer relationships", "title": "Allocating responsibilities", "description": "Responsibilities split between the organisation, partners, suppliers and customers."}, {"id": "A.10.3", "group": "A.10 Third-party and customer relationships", "title": "Suppliers", "description": "Supplier services, products and materials align with responsible AI."}, {"id": "A.10.4", "group": "A.10 Third-party and customer relationships", "title": "Customers", "description": "Customer expectations and needs considered."}]}, "MIT": {"id": "MIT", "name": "MIT AI Risk Repository - Domain Taxonomy", "short": "MIT Risk Domains", "kind": "risk", "version": "Domain Taxonomy (7 domains, 24 subdomains)", "source_url": "https://airisk.mit.edu/", "licence_note": "Taxonomy structure from the MIT AI Risk Initiative (MIT FutureTech / University of Queensland). Subdomain descriptions in this file are paraphrased summaries written for this project. Check airisk.mit.edu for the current version and licence terms.", "items": [{"id": "MIT-1.1", "group": "1. Discrimination & Toxicity", "title": "Unfair discrimination and misrepresentation", "description": "AI treats people or groups unequally or misrepresents them, often reflecting biased data or design."}, {"id": "MIT-1.2", "group": "1. Discrimination & Toxicity", "title": "Exposure to toxic content", "description": "AI produces or exposes people to harmful, abusive or inappropriate content."}, {"id": "MIT-1.3", "group": "1. Discrimination & Toxicity", "title": "Unequal performance across groups", "description": "AI accuracy or quality differs materially between demographic or user groups."}, {"id": "MIT-2.1", "group": "2. Privacy & Security", "title": "Compromise of privacy", "description": "AI obtains, leaks or infers sensitive personal information without appropriate consent."}, {"id": "MIT-2.2", "group": "2. Privacy & Security", "title": "AI system security vulnerabilities and attacks", "description": "Weaknesses in models, data, software or infrastructure that attackers can exploit."}, {"id": "MIT-3.1", "group": "3. Misinformation", "title": "False or misleading information", "description": "AI generates inaccurate content that people may rely on or spread."}, {"id": "MIT-3.2", "group": "3. Misinformation", "title": "Pollution of information ecosystem", "description": "Large volumes of AI content degrade shared information quality and trust."}, {"id": "MIT-4.1", "group": "4. Malicious Actors & Misuse", "title": "Disinformation, surveillance and influence at scale", "description": "AI used deliberately to manipulate opinion or monitor people at scale."}, {"id": "MIT-4.2", "group": "4. Malicious Actors & Misuse", "title": "Cyberattacks, weapon development and mass harm", "description": "AI used to plan or amplify attacks, including cyber offence or weapons."}, {"id": "MIT-4.3", "group": "4. Malicious Actors & Misuse", "title": "Fraud, scams and targeted manipulation", "description": "AI used to deceive individuals for gain, e.g. deepfakes or tailored phishing."}, {"id": "MIT-5.1", "group": "5. Human-Computer Interaction", "title": "Overreliance and unsafe use", "description": "People trust or depend on AI beyond its actual reliability."}, {"id": "MIT-5.2", "group": "5. Human-Computer Interaction", "title": "Loss of human agency and autonomy", "description": "Decisions shift to AI in ways that reduce meaningful human choice or control."}, {"id": "MIT-6.1", "group": "6. Socioeconomic & Environmental", "title": "Power centralisation and unfair distribution of benefits", "description": "AI concentrates economic or political power with a small number of actors."}, {"id": "MIT-6.2", "group": "6. Socioeconomic & Environmental", "title": "Increased inequality and decline in employment quality", "description": "AI widens inequality or degrades job quality and security."}, {"id": "MIT-6.3", "group": "6. Socioeconomic & Environmental", "title": "Economic and cultural devaluation of human effort", "description": "AI reduces the value placed on human work and creativity."}, {"id": "MIT-6.4", "group": "6. Socioeconomic & Environmental", "title": "Competitive dynamics", "description": "Race dynamics push developers to cut corners on safety."}, {"id": "MIT-6.5", "group": "6. Socioeconomic & Environmental", "title": "Governance failure", "description": "Rules, oversight and institutions fail to keep pace with AI risk."}, {"id": "MIT-6.6", "group": "6. Socioeconomic & Environmental", "title": "Environmental harm", "description": "AI development and use consume energy, water and materials with ecological impact."}, {"id": "MIT-7.1", "group": "7. AI System Safety, Failures & Limitations", "title": "AI pursuing its own goals in conflict with human goals", "description": "AI behaves in ways misaligned with the intent or values of the people it serves."}, {"id": "MIT-7.2", "group": "7. AI System Safety, Failures & Limitations", "title": "AI possessing dangerous capabilities", "description": "AI has capabilities (e.g. deception, autonomy) that could cause severe harm."}, {"id": "MIT-7.3", "group": "7. AI System Safety, Failures & Limitations", "title": "Lack of capability or robustness", "description": "AI fails under normal or unusual conditions, producing errors or unsafe outputs."}, {"id": "MIT-7.4", "group": "7. AI System Safety, Failures & Limitations", "title": "Lack of transparency or interpretability", "description": "It is hard to understand, explain or audit why AI behaves as it does."}, {"id": "MIT-7.5", "group": "7. AI System Safety, Failures & Limitations", "title": "AI welfare and rights", "description": "Ethical questions about the moral status and treatment of AI systems."}, {"id": "MIT-7.6", "group": "7. AI System Safety, Failures & Limitations", "title": "Multi-agent risks", "description": "Harms arising from interactions between multiple AI agents or systems."}]}, "OECD": {"id": "OECD", "name": "OECD AI Principles - Values-based Principles", "short": "OECD", "kind": "principle", "version": "Recommendation of the Council on AI (2019, updated 2024)", "source_url": "https://oecd.ai/en/ai-principles", "licence_note": "Principle titles from the OECD; summaries paraphrased for this project.", "items": [{"id": "OECD-1.1", "title": "Inclusive growth, sustainable development and well-being", "description": "AI should benefit people and the planet, reduce inequality and protect the environment."}, {"id": "OECD-1.2", "title": "Respect for the rule of law, human rights and democratic values, including fairness and privacy", "description": "AI should respect rights, non-discrimination, privacy and human agency, with safeguards such as human oversight."}, {"id": "OECD-1.3", "title": "Transparency and explainability", "description": "People should know when they interact with AI and be able to understand and challenge outcomes."}, {"id": "OECD-1.4", "title": "Robustness, security and safety", "description": "AI should work reliably and securely across its lifecycle, with mechanisms to override or shut it down safely."}, {"id": "OECD-1.5", "title": "Accountability", "description": "AI actors are accountable for proper functioning, with traceability and systematic risk management."}]}, "OWASP-ASI": {"id": "OWASP-ASI", "name": "OWASP Top 10 for Agentic Applications 2026", "short": "OWASP Agentic", "kind": "risk", "version": "2026 (first edition, December 2025)", "source_url": "https://genai.owasp.org/", "licence_note": "Risk names from the OWASP GenAI Security Project (Agentic Security Initiative). Descriptions are paraphrased for this project. Verify titles against the official release before relying on them.", "items": [{"id": "ASI01", "title": "Agent Goal Hijack", "description": "Untrusted content redirects an agent's objectives or plan."}, {"id": "ASI02", "title": "Tool Misuse and Exploitation", "description": "An agent uses legitimate tools in unsafe or unintended ways."}, {"id": "ASI03", "title": "Identity and Privilege Abuse", "description": "Agent credentials, delegated authority or non-human identities are abused."}, {"id": "ASI04", "title": "Agentic Supply Chain Vulnerabilities", "description": "Compromised tools, plugins, MCP servers or agent components."}, {"id": "ASI05", "title": "Unexpected Code Execution", "description": "Agents generate or run code that leads to unintended execution."}, {"id": "ASI06", "title": "Memory and Context Poisoning", "description": "Persistent memory or retrieved context is manipulated to steer future behaviour."}, {"id": "ASI07", "title": "Insecure Inter-Agent Communication", "description": "Messages between agents are spoofed, intercepted or unauthenticated."}, {"id": "ASI08", "title": "Cascading Failures", "description": "One agent's fault propagates across connected agents and systems."}, {"id": "ASI09", "title": "Human-Agent Trust Exploitation", "description": "Users' trust in agents is exploited to gain approval for harmful actions."}, {"id": "ASI10", "title": "Rogue Agents", "description": "Agents drift, collude or act harmfully beyond their intended scope."}]}, "OWASP-LLM": {"id": "OWASP-LLM", "name": "OWASP Top 10 for LLM Applications 2026", "short": "OWASP LLM", "kind": "risk", "version": "2026 (v1.0, August 2026)", "source_url": "https://genai.owasp.org/", "licence_note": "Risk names from the OWASP GenAI Security Project (published under CC BY-SA 4.0). Descriptions are paraphrased for this project. 2025 identifiers are kept in `legacy_id` so older mappings still resolve.", "items": [{"id": "LLM01", "title": "Prompt Injection", "legacy_id": "LLM01:2025", "description": "Crafted inputs (direct, indirect or cross-modal) override the model's intended instructions."}, {"id": "LLM02", "title": "Sensitive Information Disclosure", "legacy_id": "LLM02:2025", "description": "The application reveals personal, confidential or proprietary data through model output."}, {"id": "LLM03", "title": "Excessive Agency", "legacy_id": "LLM06:2025", "description": "The model is given more functionality, permissions or autonomy than the task needs."}, {"id": "LLM04", "title": "Supply Chain", "legacy_id": "LLM03:2025", "description": "Third-party models, datasets, plugins or libraries introduce weaknesses."}, {"id": "LLM05", "title": "Data and Model Poisoning", "legacy_id": "LLM04:2025", "description": "Training, fine-tuning or embedding data is manipulated to plant bias or backdoors."}, {"id": "LLM06", "title": "Unbounded Consumption", "legacy_id": "LLM10:2025", "description": "Uncontrolled inference use causes denial of service, cost blow-outs or model extraction."}, {"id": "LLM07", "title": "Misinformation", "legacy_id": "LLM09:2025", "description": "The model produces false or misleading content that users act on."}, {"id": "LLM08", "title": "Hidden Context Exposure", "legacy_id": "LLM07:2025", "description": "Non-user-facing context such as system prompts or hidden instructions can be extracted."}, {"id": "LLM09", "title": "Vector and Embedding Weaknesses", "legacy_id": "LLM08:2025", "description": "Weaknesses in RAG pipelines and vector stores allow leakage or manipulation."}, {"id": "LLM10", "title": "Improper Output Handling", "legacy_id": "LLM05:2025", "description": "Model output is passed downstream without validation, enabling injection or code execution."}]}}, "mitigation_categories": [{"id": "MITM-GOV", "title": "Governance & Oversight Controls", "description": "Structures, policies and accountability that keep people in control of AI decisions and risk."}, {"id": "MITM-TECH", "title": "Technical & Security Controls", "description": "Built-in technical safeguards that make AI systems safe, secure and aligned."}, {"id": "MITM-OPS", "title": "Operational Process Controls", "description": "Processes that guide how AI is tested, deployed, monitored and managed day to day."}, {"id": "MITM-TRANS", "title": "Transparency & Accountability Controls", "description": "Ways of sharing and checking information about AI systems to enable external scrutiny."}], "sectors": [{"id": "manufacturing", "name": "Manufacturing", "example_use_cases": ["Predictive maintenance on production lines", "Computer-vision quality inspection", "AI in connected products and robotics", "GenAI copilots for engineering and R&D documentation"], "regulatory_context": ["EU AI Act: AI as a safety component of products under Annex I legislation (e.g. machinery) can be high-risk via Art. 6(1)", "EU AI Act Annex III: safety components in critical infrastructure management", "EU Cyber Resilience Act for products with digital elements", "EU Machinery Regulation (EU) 2023/1230"], "key_concerns": ["Physical safety", "Robustness", "OT/IT security", "IP leakage", "Supply chain"]}, {"id": "finance", "name": "Financial Services", "example_use_cases": ["Credit scoring and affordability", "Fraud and AML transaction monitoring", "Customer-service chatbots and advisers", "Insurance pricing and underwriting"], "regulatory_context": ["EU AI Act Annex III: creditworthiness / credit scoring and life & health insurance risk pricing are high-risk", "EU DORA - ICT risk and third-party risk management", "UK: PRA SS1/23 model risk management principles; FCA Consumer Duty"], "key_concerns": ["Fairness", "Explainability", "Model risk", "Operational resilience", "Third-party concentration"]}, {"id": "healthcare", "name": "Healthcare & Life Sciences", "example_use_cases": ["Diagnostic imaging and clinical decision support", "Patient triage and scheduling", "Clinical documentation and ambient scribing", "Drug discovery and trial analytics"], "regulatory_context": ["EU AI Act: AI medical devices under MDR/IVDR can be high-risk via Art. 6(1) and Annex I", "EU AI Act Annex III: emergency triage and access to essential public services", "UK: MHRA software and AI as a medical device guidance; NHS DTAC"], "key_concerns": ["Patient safety", "Special-category data", "Clinical validation", "Bias across populations", "Human oversight"]}], "controls": [{"id": "AICC-01", "title": "AI governance policy and accountability", "category": "MITM-GOV", "objective": "Establish an approved AI policy, owned at senior level, that sets the organisation's risk appetite and rules for developing, buying and using AI.", "guidance": ["Board- or ExCo-approved AI policy aligned with information security, privacy and quality policies", "Named accountable executive and an AI governance forum with terms of reference", "Annual policy review, plus review triggered by major regulatory or technology change"], "evidence": ["Approved AI policy with version history", "Governance forum minutes", "Policy review log"], "maps": {"MIT": ["MIT-6.5"], "OECD": ["OECD-1.5"], "ISO42001": ["A.2.2", "A.2.3", "A.2.4", "A.3.2"], "EUAIA": ["Art.17"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-02", "title": "AI roles, responsibilities and concern reporting", "category": "MITM-GOV", "objective": "Define who owns each AI system and its risks, and give staff a safe route to raise concerns about AI behaviour.", "guidance": ["RACI covering system owner, risk owner, model developer, human overseer and DPO", "Concern-reporting channel (can reuse whistleblowing or speak-up process) that covers AI", "Competence requirements for people assigned human-oversight duties"], "evidence": ["RACI matrix", "Concern-reporting procedure", "Oversight role assignments"], "maps": {"MIT": ["MIT-6.5"], "OECD": ["OECD-1.5"], "ISO42001": ["A.3.2", "A.3.3"], "EUAIA": ["Art.17", "Art.26"]}, "sectors": {"manufacturing": "medium", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-03", "title": "AI system inventory and use-case register", "category": "MITM-GOV", "objective": "Maintain a complete inventory of AI systems, models and use cases, including shadow and third-party AI, with owners and intended purpose.", "guidance": ["Single register capturing purpose, owner, data used, model/vendor, users and deployment status", "Discovery routines for shadow AI (SaaS AI features, browser extensions, R&D prototypes)", "Intended-use statement and out-of-scope uses recorded for each system"], "evidence": ["AI inventory export", "Shadow-AI discovery report", "Intended-use statements"], "maps": {"MIT": ["MIT-6.5", "MIT-5.1"], "OECD": ["OECD-1.5"], "ISO42001": ["A.4.2", "A.9.4"], "EUAIA": ["Art.6", "Art.26"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {"manufacturing": "Include AI embedded in products and OT, not just enterprise IT."}}, {"id": "AICC-04", "title": "Risk classification and prohibited-use screening", "category": "MITM-GOV", "objective": "Screen every AI use case against prohibited practices and classify its regulatory risk tier before build or purchase.", "guidance": ["Intake questionnaire screening for prohibited practices and Annex I / Annex III high-risk triggers", "Record the classification rationale and re-screen on material change", "Escalate borderline cases to legal and the AI governance forum"], "evidence": ["Completed screening questionnaires", "Classification decisions log"], "maps": {"MIT": ["MIT-4.1", "MIT-4.3", "MIT-5.2", "MIT-6.5"], "OECD": ["OECD-1.2"], "ISO42001": ["A.5.2", "A.9.4"], "EUAIA": ["Art.5", "Art.6"]}, "sectors": {"manufacturing": "medium", "finance": "high", "healthcare": "high"}, "sector_notes": {"finance": "Credit scoring and life/health insurance pricing are listed high-risk use cases.", "healthcare": "AI medical devices and emergency triage usually land in the high-risk tier."}}, {"id": "AICC-05", "title": "AI risk management lifecycle", "category": "MITM-GOV", "objective": "Identify, assess, treat and review AI risks continuously across the lifecycle, integrated with the enterprise risk register.", "guidance": ["AI risk assessment methodology using a shared taxonomy (e.g. MIT Risk Repository domains)", "AI risks recorded in the enterprise risk register with owners, treatment plans and target dates", "Periodic reassessment and residual-risk acceptance at the right authority level"], "evidence": ["AI risk methodology", "Risk register entries", "Risk acceptance records"], "maps": {"MIT": ["MIT-6.5", "MIT-7.3"], "OECD": ["OECD-1.4", "OECD-1.5"], "ISO42001": ["A.5.2", "A.6.1.2"], "EUAIA": ["Art.9"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {"finance": "Align with model risk management (e.g. PRA SS1/23) so AI models sit in the model inventory."}}, {"id": "AICC-06", "title": "AI impact assessment on individuals and society", "category": "MITM-GOV", "objective": "Assess and document the impact of AI systems on individuals, groups, fundamental rights and society before deployment.", "guidance": ["Combined impact assessment template (fundamental rights, DPIA, equality, societal effects)", "Involve affected stakeholders or their representatives where feasible", "Keep assessments with the system record and refresh on material change"], "evidence": ["Completed impact assessments", "Stakeholder consultation notes"], "maps": {"MIT": ["MIT-1.1", "MIT-1.3", "MIT-6.2", "MIT-6.6"], "OECD": ["OECD-1.1", "OECD-1.2"], "ISO42001": ["A.5.2", "A.5.3", "A.5.4", "A.5.5"], "EUAIA": ["Art.27"]}, "sectors": {"manufacturing": "medium", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-07", "title": "Training and evaluation data governance and quality", "category": "MITM-OPS", "objective": "Ensure data used to build, fine-tune and evaluate AI is relevant, representative, accurate and fit for purpose.", "guidance": ["Data quality requirements and acceptance criteria per data set", "Examination of data sets for possible bias and gaps in representation", "Documented data preparation steps (labelling, cleaning, enrichment)"], "evidence": ["Data sheets / data cards", "Data quality reports", "Bias examination results"], "maps": {"MIT": ["MIT-1.1", "MIT-1.3", "MIT-7.3"], "OWASP-LLM": ["LLM05"], "OECD": ["OECD-1.2", "OECD-1.4"], "ISO42001": ["A.7.2", "A.7.4", "A.7.6"], "EUAIA": ["Art.10"]}, "sectors": {"manufacturing": "medium", "finance": "high", "healthcare": "high"}, "sector_notes": {"healthcare": "Check representativeness across patient populations, devices and sites."}}, {"id": "AICC-08", "title": "Data provenance and poisoning defences", "category": "MITM-TECH", "objective": "Track where data, embeddings and memory content come from and protect them against tampering.", "guidance": ["Provenance records for training, fine-tuning and RAG source data", "Integrity checks and access control on data pipelines and vector stores", "Validation of content written to agent memory; ability to roll back poisoned data"], "evidence": ["Provenance / lineage records", "Pipeline access reviews", "Vector store integrity checks"], "maps": {"MIT": ["MIT-2.2", "MIT-7.3"], "OWASP-LLM": ["LLM05", "LLM09"], "OWASP-ASI": ["ASI06"], "OECD": ["OECD-1.4"], "ISO42001": ["A.7.3", "A.7.5"], "EUAIA": ["Art.10", "Art.15"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-09", "title": "Privacy and sensitive data protection in AI", "category": "MITM-TECH", "objective": "Prevent AI systems from collecting, exposing or inferring personal, confidential or proprietary data inappropriately.", "guidance": ["Data minimisation and classification-aware rules for what may enter prompts, training and RAG", "Output filtering / DLP for sensitive data; tenant and permission-aware retrieval", "Keep secrets and sensitive rules out of system prompts and hidden context"], "evidence": ["DPIA", "DLP rule set", "Retrieval permission tests", "Prompt hygiene review"], "maps": {"MIT": ["MIT-2.1"], "OWASP-LLM": ["LLM02", "LLM08"], "OECD": ["OECD-1.2"], "ISO42001": ["A.4.3", "A.7.2"], "EUAIA": ["Art.10"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {"manufacturing": "Focus on IP and R&D design data leaking into third-party models.", "healthcare": "Special-category health data needs a lawful basis and strict minimisation."}}, {"id": "AICC-10", "title": "Bias and fairness testing", "category": "MITM-OPS", "objective": "Test AI outcomes for unfair differences across groups before release and periodically in production.", "guidance": ["Define protected and relevant groups and fairness metrics per use case", "Pre-release fairness testing with documented thresholds and sign-off", "Re-test after retraining and when population or context drifts"], "evidence": ["Fairness test reports", "Threshold sign-offs", "Re-test schedule"], "maps": {"MIT": ["MIT-1.1", "MIT-1.3"], "OECD": ["OECD-1.2"], "ISO42001": ["A.5.4", "A.6.2.4"], "EUAIA": ["Art.10", "Art.15"]}, "sectors": {"manufacturing": "low", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-11", "title": "Verification, validation and adversarial testing", "category": "MITM-OPS", "objective": "Verify AI meets its requirements and red-team it against misuse, jailbreaks and failure modes before release.", "guidance": ["Test plan covering accuracy, robustness, safety and security acceptance criteria", "Red-team exercises using OWASP LLM and Agentic Top 10 scenarios", "Re-run regression suites for every model, prompt or tool change"], "evidence": ["V&V reports", "Red-team findings and remediation", "Regression results"], "maps": {"MIT": ["MIT-2.2", "MIT-3.1", "MIT-4.2", "MIT-7.3"], "OWASP-LLM": ["LLM01", "LLM07", "LLM10"], "OWASP-ASI": ["ASI01"], "OECD": ["OECD-1.4"], "ISO42001": ["A.6.2.4"], "EUAIA": ["Art.15", "Art.55"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {"healthcare": "Clinical validation should be prospective where outputs inform care decisions."}}, {"id": "AICC-12", "title": "Prompt injection and hidden context protection", "category": "MITM-TECH", "objective": "Treat all external and retrieved content as untrusted and stop it from overriding system instructions or extracting hidden context.", "guidance": ["Separate and label trusted instructions from untrusted content (documents, web, email, images)", "Input screening for direct, indirect and cross-modal injection", "Constrain agent objectives so retrieved content cannot change goals without approval"], "evidence": ["Input-handling design", "Injection test cases", "Guardrail configuration"], "maps": {"MIT": ["MIT-2.2"], "OWASP-LLM": ["LLM01", "LLM08"], "OWASP-ASI": ["ASI01", "ASI06"], "OECD": ["OECD-1.4"], "ISO42001": ["A.6.1.3", "A.6.2.2"], "EUAIA": ["Art.15"]}, "sectors": {"manufacturing": "medium", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-13", "title": "Output validation and content safeguards", "category": "MITM-TECH", "objective": "Validate and constrain model output before it reaches users or downstream systems, including code and commands.", "guidance": ["Encode and validate output before passing to browsers, databases, shells or APIs", "Sandbox any execution of model-generated code", "Content safety filters and grounding / citation checks for factual claims"], "evidence": ["Output validation design", "Sandbox configuration", "Content filter test results"], "maps": {"MIT": ["MIT-1.2", "MIT-3.1", "MIT-2.2"], "OWASP-LLM": ["LLM07", "LLM10"], "OWASP-ASI": ["ASI05"], "OECD": ["OECD-1.4"], "ISO42001": ["A.6.2.2"], "EUAIA": ["Art.15", "Art.50"]}, "sectors": {"manufacturing": "medium", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-14", "title": "Agent permissions and least agency", "category": "MITM-TECH", "objective": "Give AI agents only the tools, permissions and autonomy their task needs, with scoped identities and authenticated agent-to-agent communication.", "guidance": ["Tool allow-lists and per-tool scopes; no broad standing credentials", "Distinct, short-lived non-human identities for agents; no inherited user super-privileges", "Authenticate and integrity-protect inter-agent messages; limit delegation depth"], "evidence": ["Agent permission matrix", "Identity configuration", "Inter-agent auth design"], "maps": {"MIT": ["MIT-5.2", "MIT-7.1", "MIT-7.6"], "OWASP-LLM": ["LLM03"], "OWASP-ASI": ["ASI02", "ASI03", "ASI07"], "OECD": ["OECD-1.4", "OECD-1.5"], "ISO42001": ["A.6.1.3", "A.9.2"], "EUAIA": ["Art.14", "Art.15"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "medium"}, "sector_notes": {"manufacturing": "Agents that can act on OT or production systems need hard safety interlocks."}}, {"id": "AICC-15", "title": "Human oversight and intervention", "category": "MITM-GOV", "objective": "Ensure competent people can understand, override, stop or reverse AI decisions, proportionate to risk.", "guidance": ["Define where human-in-the-loop, on-the-loop or post-hoc review applies per use case", "Approval gates for high-impact agent actions; stop / kill switch tested regularly", "Design approvals to resist rubber-stamping and manipulation (clear context, no dark patterns)"], "evidence": ["Oversight design per system", "Approval logs", "Kill-switch test records"], "maps": {"MIT": ["MIT-5.1", "MIT-5.2", "MIT-7.1"], "OWASP-ASI": ["ASI09", "ASI10"], "OECD": ["OECD-1.2", "OECD-1.4", "OECD-1.5"], "ISO42001": ["A.9.2", "A.9.3"], "EUAIA": ["Art.14", "Art.26"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {"healthcare": "Clinician remains the decision-maker; guard against automation bias."}}, {"id": "AICC-16", "title": "Transparency to users and AI disclosure", "category": "MITM-TRANS", "objective": "Tell people when they are interacting with AI or seeing AI-generated content, and what the system can and cannot do.", "guidance": ["Clear AI-interaction notices and labelling or marking of synthetic content", "User-facing documentation of capabilities, limitations and appropriate use", "Information for affected people on how to query or contest outcomes"], "evidence": ["User notices", "Content marking approach", "User documentation"], "maps": {"MIT": ["MIT-3.1", "MIT-3.2", "MIT-5.1", "MIT-7.4"], "OECD": ["OECD-1.3"], "ISO42001": ["A.8.2", "A.8.5"], "EUAIA": ["Art.13", "Art.50"]}, "sectors": {"manufacturing": "medium", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-17", "title": "Explainability and technical documentation", "category": "MITM-TRANS", "objective": "Document how AI systems are designed, built and behave so that outcomes can be explained and compliance demonstrated.", "guidance": ["Model and system cards covering purpose, data, design choices, performance and limits", "Explanation methods appropriate to the audience (regulator, user, affected person)", "Keep documentation current with each material change"], "evidence": ["Model / system cards", "Design decision records", "Explanation samples"], "maps": {"MIT": ["MIT-7.4"], "OECD": ["OECD-1.3", "OECD-1.5"], "ISO42001": ["A.6.2.3", "A.6.2.7"], "EUAIA": ["Art.11", "Art.13", "Art.53"]}, "sectors": {"manufacturing": "medium", "finance": "high", "healthcare": "high"}, "sector_notes": {"finance": "Adverse credit decisions need explanations customers can understand."}}, {"id": "AICC-18", "title": "Event logging and traceability", "category": "MITM-TRANS", "objective": "Log AI inputs, outputs, decisions, tool calls and agent actions so behaviour can be reconstructed and investigated.", "guidance": ["Define what is logged per lifecycle phase, with retention aligned to legal requirements", "Correlate agent plans, tool calls and approvals in one trace", "Protect logs from tampering and redact sensitive data where needed"], "evidence": ["Logging standard", "Sample traces", "Log retention configuration"], "maps": {"MIT": ["MIT-7.4", "MIT-2.2"], "OWASP-ASI": ["ASI10"], "OECD": ["OECD-1.5"], "ISO42001": ["A.6.2.8"], "EUAIA": ["Art.12", "Art.26"]}, "sectors": {"manufacturing": "medium", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-19", "title": "AI supply chain and third-party model assurance", "category": "MITM-GOV", "objective": "Assess and govern third-party models, data sets, tools, plugins and AI vendors, with clear allocation of responsibilities.", "guidance": ["AI-specific vendor due diligence (model provenance, training data, security testing, data use terms)", "AI bill of materials for models, data sets and agent tools / MCP servers", "Contractual allocation of provider / deployer responsibilities and incident cooperation"], "evidence": ["AI vendor questionnaires", "AIBOM", "Contract clauses", "Supplier review records"], "maps": {"MIT": ["MIT-2.2", "MIT-6.5"], "OWASP-LLM": ["LLM04"], "OWASP-ASI": ["ASI04"], "OECD": ["OECD-1.5"], "ISO42001": ["A.4.4", "A.10.2", "A.10.3"], "EUAIA": ["Art.25", "Art.53"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {"finance": "Treat critical AI providers as ICT third-party risk (e.g. DORA register)."}}, {"id": "AICC-20", "title": "Model and AI infrastructure security", "category": "MITM-TECH", "objective": "Protect models, weights, vector stores, agent runtimes and compute from unauthorised access, theft and tampering.", "guidance": ["Harden and segment AI infrastructure; secure model registries and artefact signing", "Access control and monitoring on vector databases and embedding pipelines", "Run agent code execution in isolated, least-privilege sandboxes"], "evidence": ["Architecture and threat model", "Access reviews", "Vulnerability scan results"], "maps": {"MIT": ["MIT-2.2"], "OWASP-LLM": ["LLM04", "LLM09"], "OWASP-ASI": ["ASI03", "ASI05"], "OECD": ["OECD-1.4"], "ISO42001": ["A.4.5", "A.6.2.5"], "EUAIA": ["Art.15"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-21", "title": "Resource abuse and cascading failure protection", "category": "MITM-TECH", "objective": "Prevent uncontrolled consumption, denial of service, model extraction and runaway agent loops.", "guidance": ["Rate limits, quotas and budget alerts per user, app and agent", "Loop, recursion and timeout limits for agents; circuit breakers between agents", "Monitor for extraction patterns and anomalous usage"], "evidence": ["Quota configuration", "Cost and usage dashboards", "Circuit-breaker tests"], "maps": {"MIT": ["MIT-2.2", "MIT-6.6", "MIT-7.6"], "OWASP-LLM": ["LLM06"], "OWASP-ASI": ["ASI08"], "OECD": ["OECD-1.4"], "ISO42001": ["A.4.5", "A.6.2.6"], "EUAIA": ["Art.15"]}, "sectors": {"manufacturing": "medium", "finance": "high", "healthcare": "medium"}, "sector_notes": {}}, {"id": "AICC-22", "title": "Deployment gates and change management", "category": "MITM-OPS", "objective": "Release AI only through defined readiness gates, and control changes to models, prompts, tools and data.", "guidance": ["Go-live checklist linking risk assessment, testing, documentation and oversight sign-off", "Version control for models, prompts, agent configurations and guardrails", "Rollback plan and staged rollout for material changes"], "evidence": ["Release checklists", "Change records", "Rollback test evidence"], "maps": {"MIT": ["MIT-7.3"], "OECD": ["OECD-1.4"], "ISO42001": ["A.6.1.3", "A.6.2.5"], "EUAIA": ["Art.9", "Art.17"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-23", "title": "Post-deployment monitoring and drift management", "category": "MITM-OPS", "objective": "Monitor AI performance, safety, fairness and behaviour in production and act on drift or emerging issues.", "guidance": ["KPIs and thresholds for accuracy, hallucination, fairness and safety events", "Behavioural monitoring for agents acting outside expected patterns", "Feedback loop from users and incidents into the risk register"], "evidence": ["Monitoring dashboards", "Threshold breach records", "Post-market monitoring plan"], "maps": {"MIT": ["MIT-3.1", "MIT-7.3", "MIT-7.6"], "OWASP-LLM": ["LLM07"], "OWASP-ASI": ["ASI08", "ASI10"], "OECD": ["OECD-1.4"], "ISO42001": ["A.6.2.6"], "EUAIA": ["Art.26", "Art.72"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-24", "title": "AI incident management and reporting", "category": "MITM-OPS", "objective": "Detect, respond to, learn from and report AI incidents, including regulatory notification where required.", "guidance": ["Extend incident taxonomy and playbooks to AI-specific harms and agent failures", "Criteria and timelines for internal escalation and external / regulatory reporting", "Post-incident reviews feeding back into controls and testing"], "evidence": ["AI incident playbook", "Incident records", "Regulator notifications", "Lessons-learned reports"], "maps": {"MIT": ["MIT-6.5", "MIT-7.3"], "OWASP-ASI": ["ASI08", "ASI10"], "OECD": ["OECD-1.5"], "ISO42001": ["A.3.3", "A.8.3", "A.8.4"], "EUAIA": ["Art.73"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-25", "title": "AI literacy and responsible-use training", "category": "MITM-GOV", "objective": "Give staff the knowledge to use, oversee and challenge AI appropriately for their role.", "guidance": ["Role-based AI literacy curriculum (all staff, developers, overseers, executives)", "Training on over-reliance, verification of outputs and recognising manipulation by agents", "Track completion and refresh as tools and rules change"], "evidence": ["Training curriculum", "Completion records", "Awareness campaign materials"], "maps": {"MIT": ["MIT-5.1"], "OWASP-ASI": ["ASI09"], "OECD": ["OECD-1.1", "OECD-1.5"], "ISO42001": ["A.4.6", "A.9.2"], "EUAIA": ["Art.4"]}, "sectors": {"manufacturing": "high", "finance": "high", "healthcare": "high"}, "sector_notes": {}}, {"id": "AICC-26", "title": "Environmental and compute footprint management", "category": "MITM-OPS", "objective": "Measure and manage the energy and resource footprint of AI development and use.", "guidance": ["Track compute and energy use for training and inference where feasible", "Prefer right-sized models; include footprint in build-vs-buy decisions", "Report footprint alongside other sustainability metrics"], "evidence": ["Compute / energy reports", "Model selection rationale"], "maps": {"MIT": ["MIT-6.6"], "OECD": ["OECD-1.1"], "ISO42001": ["A.4.5", "A.5.5"], "EUAIA": ["Art.53"]}, "sectors": {"manufacturing": "medium", "finance": "low", "healthcare": "low"}, "sector_notes": {}}, {"id": "AICC-27", "title": "Dangerous capability and misuse safeguards", "category": "MITM-TECH", "objective": "Prevent AI capabilities from being used for fraud, manipulation, cyber offence or other serious misuse.", "guidance": ["Usage policies and acceptable-use enforcement for AI tools and APIs", "Capability evaluations and abuse monitoring for high-impact models and agents", "Controls against deepfake and impersonation fraud in customer channels"], "evidence": ["Acceptable-use policy", "Capability evaluation results", "Abuse monitoring alerts"], "maps": {"MIT": ["MIT-4.1", "MIT-4.2", "MIT-4.3", "MIT-7.2"], "OWASP-ASI": ["ASI10"], "OECD": ["OECD-1.2", "OECD-1.4"], "ISO42001": ["A.5.5", "A.9.4"], "EUAIA": ["Art.5", "Art.55"]}, "sectors": {"manufacturing": "medium", "finance": "high", "healthcare": "medium"}, "sector_notes": {"finance": "Voice and video deepfakes are a live payment-fraud vector."}}, {"id": "AICC-28", "title": "Customer and downstream deployer information", "category": "MITM-TRANS", "objective": "Give customers and downstream deployers what they need to use the AI system safely and meet their own obligations.", "guidance": ["Instructions for use, known limitations and required oversight measures", "Channel for customers to report issues and receive updates", "Clear statement of which party holds which obligations"], "evidence": ["Instructions for use", "Customer issue log", "Responsibility matrix"], "maps": {"MIT": ["MIT-5.1"], "OECD": ["OECD-1.3", "OECD-1.5"], "ISO42001": ["A.8.2", "A.10.4"], "EUAIA": ["Art.13", "Art.25"]}, "sectors": {"manufacturing": "high", "finance": "medium", "healthcare": "high"}, "sector_notes": {}}], "coverage": {"MIT": {"total": 24, "covered": 20, "gaps": ["MIT-6.1", "MIT-6.3", "MIT-6.4", "MIT-7.5"], "percent": 83.3}, "OWASP-LLM": {"total": 10, "covered": 10, "gaps": [], "percent": 100.0}, "OWASP-ASI": {"total": 10, "covered": 10, "gaps": [], "percent": 100.0}, "OECD": {"total": 5, "covered": 5, "gaps": [], "percent": 100.0}, "ISO42001": {"total": 38, "covered": 38, "gaps": [], "percent": 100.0}, "EUAIA": {"total": 19, "covered": 19, "gaps": [], "percent": 100.0}}, "heatmap": {"MIT-1.1": {"OWASP-LLM": 1, "OWASP-ASI": 0, "OECD": 3, "ISO42001": 8, "EUAIA": 3, "controls": 3}, "MIT-1.2": {"OWASP-LLM": 2, "OWASP-ASI": 1, "OECD": 1, "ISO42001": 1, "EUAIA": 2, "controls": 1}, "MIT-1.3": {"OWASP-LLM": 1, "OWASP-ASI": 0, "OECD": 3, "ISO42001": 8, "EUAIA": 3, "controls": 3}, "MIT-2.1": {"OWASP-LLM": 2, "OWASP-ASI": 0, "OECD": 1, "ISO42001": 2, "EUAIA": 1, "controls": 1}, "MIT-2.2": {"OWASP-LLM": 8, "OWASP-ASI": 7, "OECD": 2, "ISO42001": 12, "EUAIA": 8, "controls": 8}, "MIT-3.1": {"OWASP-LLM": 3, "OWASP-ASI": 4, "OECD": 2, "ISO42001": 5, "EUAIA": 6, "controls": 4}, "MIT-3.2": {"OWASP-LLM": 0, "OWASP-ASI": 0, "OECD": 1, "ISO42001": 2, "EUAIA": 2, "controls": 1}, "MIT-4.1": {"OWASP-LLM": 0, "OWASP-ASI": 1, "OECD": 2, "ISO42001": 3, "EUAIA": 3, "controls": 2}, "MIT-4.2": {"OWASP-LLM": 3, "OWASP-ASI": 2, "OECD": 2, "ISO42001": 3, "EUAIA": 3, "controls": 2}, "MIT-4.3": {"OWASP-LLM": 0, "OWASP-ASI": 1, "OECD": 2, "ISO42001": 3, "EUAIA": 3, "controls": 2}, "MIT-5.1": {"OWASP-LLM": 0, "OWASP-ASI": 2, "OECD": 5, "ISO42001": 8, "EUAIA": 7, "controls": 5}, "MIT-5.2": {"OWASP-LLM": 1, "OWASP-ASI": 5, "OECD": 3, "ISO42001": 5, "EUAIA": 5, "controls": 3}, "MIT-6.1": {"OWASP-LLM": 0, "OWASP-ASI": 0, "OECD": 0, "ISO42001": 0, "EUAIA": 0, "controls": 0}, "MIT-6.2": {"OWASP-LLM": 0, "OWASP-ASI": 0, "OECD": 2, "ISO42001": 4, "EUAIA": 1, "controls": 1}, "MIT-6.3": {"OWASP-LLM": 0, "OWASP-ASI": 0, "OECD": 0, "ISO42001": 0, "EUAIA": 0, "controls": 0}, "MIT-6.4": {"OWASP-LLM": 0, "OWASP-ASI": 0, "OECD": 0, "ISO42001": 0, "EUAIA": 0, "controls": 0}, "MIT-6.5": {"OWASP-LLM": 1, "OWASP-ASI": 3, "OECD": 3, "ISO42001": 14, "EUAIA": 8, "controls": 7}, "MIT-6.6": {"OWASP-LLM": 1, "OWASP-ASI": 1, "OECD": 3, "ISO42001": 6, "EUAIA": 3, "controls": 3}, "MIT-7.1": {"OWASP-LLM": 1, "OWASP-ASI": 5, "OECD": 3, "ISO42001": 3, "EUAIA": 3, "controls": 2}, "MIT-7.2": {"OWASP-LLM": 0, "OWASP-ASI": 1, "OECD": 2, "ISO42001": 2, "EUAIA": 2, "controls": 1}, "MIT-7.3": {"OWASP-LLM": 5, "OWASP-ASI": 4, "OECD": 3, "ISO42001": 14, "EUAIA": 8, "controls": 7}, "MIT-7.4": {"OWASP-LLM": 0, "OWASP-ASI": 1, "OECD": 2, "ISO42001": 5, "EUAIA": 6, "controls": 3}, "MIT-7.5": {"OWASP-LLM": 0, "OWASP-ASI": 0, "OECD": 0, "ISO42001": 0, "EUAIA": 0, "controls": 0}, "MIT-7.6": {"OWASP-LLM": 3, "OWASP-ASI": 5, "OECD": 2, "ISO42001": 4, "EUAIA": 4, "controls": 3}}};
+
+(async function () {
+  const DATA = EMBEDDED || await fetch("data.json").then(r => r.json());
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const RANK = { high: 3, medium: 2, low: 1 };
+  const FW = DATA.framework_order;
+  const fw = id => DATA.frameworks[id];
+  const color = id => `var(--fw-${id})`;
+  const cats = Object.fromEntries(DATA.mitigation_categories.map(c => [c.id, c]));
+  const itemIndex = {};
+  FW.forEach(f => fw(f).items.forEach(i => itemIndex[f + "|" + i.id] = i));
+  const itemTitle = (f, id) => (itemIndex[f + "|" + id] || {}).title || id;
+
+  // ---------- theme ----------
+  const themeBtn = $("#themeBtn");
+  try { const t = localStorage.getItem("cw-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  themeBtn.onclick = () => {
+    const cur = document.documentElement.dataset.theme ||
+      (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const next = cur === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("cw-theme", next); } catch (e) {}
+    requestAnimationFrame(drawFlowLines);
+  };
+
+  // ---------- filters ----------
+  const state = { sector: "", prio: "high", cat: "", q: "", view: "overview", matrixMode: "ids" };
+  DATA.sectors.forEach(s => $("#fSector").insertAdjacentHTML("beforeend", `<option value="${s.id}">${esc(s.name)}</option>`));
+  DATA.mitigation_categories.forEach(c => $("#fCat").insertAdjacentHTML("beforeend", `<option value="${c.id}">${esc(c.title)}</option>`));
+
+  function matchesSearch(c, q) {
+    if (!q) return true;
+    const hay = [c.id, c.title, c.objective, ...(c.guidance || []), ...(c.evidence || []),
+      ...FW.flatMap(f => (c.maps[f] || []).flatMap(id => [id, itemTitle(f, id)]))].join(" ").toLowerCase();
+    return q.toLowerCase().split(/\s+/).filter(Boolean).every(t => hay.includes(t));
+  }
+  function filteredControls() {
+    return DATA.controls.filter(c =>
+      (!state.sector || RANK[c.sectors[state.sector]] >= RANK[state.prio]) &&
+      (!state.cat || c.category === state.cat) &&
+      matchesSearch(c, state.q));
+  }
+  function coverage(controls) {
+    const out = {};
+    FW.forEach(f => {
+      const covered = new Set(controls.flatMap(c => c.maps[f] || []));
+      const items = fw(f).items;
+      const n = items.filter(i => covered.has(i.id)).length;
+      out[f] = { total: items.length, covered: n, pct: items.length ? 100 * n / items.length : 0,
+                 gaps: items.filter(i => !covered.has(i.id)) };
+    });
+    return out;
+  }
+  function updateNote(n) {
+    const parts = [];
+    if (state.sector) parts.push(`${DATA.sectors.find(s => s.id === state.sector).name} (${state.prio === "low" ? "any" : state.prio === "medium" ? "medium+" : "high"} priority)`);
+    if (state.cat) parts.push(cats[state.cat].title);
+    if (state.q) parts.push(`matching “${state.q}”`);
+    $("#filterNote").textContent = `Showing ${n} of ${DATA.controls.length} controls` + (parts.length ? " · " + parts.join(" · ") : "");
+    $("#fPrio").disabled = !state.sector;
+  }
+  ["#fSector", "#fPrio", "#fCat"].forEach(sel => $(sel).addEventListener("change", e => {
+    state[{ "#fSector": "sector", "#fPrio": "prio", "#fCat": "cat" }[sel]] = e.target.value; render();
+  }));
+  let qTimer; $("#fSearch").addEventListener("input", e => { clearTimeout(qTimer); qTimer = setTimeout(() => { state.q = e.target.value.trim(); render(); }, 150); });
+  $("#resetBtn").onclick = () => {
+    Object.assign(state, { sector: "", prio: "high", cat: "", q: "" });
+    $("#fSector").value = ""; $("#fPrio").value = "high"; $("#fCat").value = ""; $("#fSearch").value = "";
+    render();
+  };
+
+  // ---------- tabs ----------
+  function showView(v) {
+    state.view = v;
+    $$("nav.tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.view === v));
+    $$("section.view").forEach(s => s.classList.toggle("active", s.id === "view-" + v));
+    if (v === "pivot") requestAnimationFrame(drawFlowLines);
+  }
+  $$("nav.tabs button").forEach(b => b.onclick = () => showView(b.dataset.view));
+
+  // ---------- overview ----------
+  function bars(el, rows, max) {
+    el.innerHTML = rows.map(r => `
+      <div class="bar-row" ${r.go ? `data-go="${r.go}"` : ""} title="${esc(r.title || "")}">
+        <div class="bar-label">${r.dot ? `<span class="fw-dot" style="background:${r.dot}"></span>` : ""}${esc(r.label)}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${max ? 100 * r.value / max : 0}%;background:${r.color}"></div></div>
+        <div class="bar-val">${esc(r.text)}</div>
+      </div>`).join("");
+    el.querySelectorAll("[data-go]").forEach(n => n.onclick = () => showView(n.dataset.go));
+  }
+  function renderOverview(ctrls, cov) {
+    const maps = ctrls.reduce((a, c) => a + FW.reduce((b, f) => b + (c.maps[f] || []).length, 0), 0);
+    const totalItems = FW.reduce((a, f) => a + cov[f].total, 0);
+    const coveredItems = FW.reduce((a, f) => a + cov[f].covered, 0);
+    const k = [
+      [ctrls.length, "Unified controls in view"],
+      [FW.length, "Frameworks mapped"],
+      [maps, "Control → requirement mappings"],
+      [`${Math.round(100 * coveredItems / totalItems)}%`, `Items covered (${coveredItems}/${totalItems})`],
+    ];
+    $("#kpis").innerHTML = k.map(([v, l]) => `<div class="card kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+    bars($("#covBars"), FW.map(f => ({ label: fw(f).short, value: cov[f].pct, color: color(f), dot: color(f), go: "gaps",
+      text: `${cov[f].covered}/${cov[f].total}`, title: fw(f).name })), 100);
+    const catCounts = DATA.mitigation_categories.map(c => ({ label: c.title.replace(" Controls", ""), value: ctrls.filter(x => x.category === c.id).length, color: "var(--accent)" }));
+    const cmax = Math.max(1, ...catCounts.map(c => c.value));
+    bars($("#catBars"), catCounts.map(c => ({ ...c, text: String(c.value) })), cmax);
+    const secCounts = DATA.sectors.map(s => ({ label: s.name.split(" ")[0], value: ctrls.filter(c => c.sectors[s.id] === "high").length, color: "var(--hi)", title: s.name }));
+    const smax = Math.max(1, ...secCounts.map(c => c.value));
+    bars($("#sectorBars"), secCounts.map(c => ({ ...c, text: String(c.value) })), smax);
+    $("#fwCards").innerHTML = FW.map(f => `
+      <div class="card fw-card" style="--c:${color(f)}">
+        <h3><span class="fw-dot" style="background:${color(f)}"></span>${esc(fw(f).name)}</h3>
+        <div class="meta">${esc(fw(f).version || "")} · ${fw(f).items.length} items</div>
+        <a href="${esc(fw(f).source_url)}" target="_blank" rel="noopener">Source ↗</a>
+      </div>`).join("");
+    const sec = state.sector ? DATA.sectors.filter(s => s.id === state.sector) : DATA.sectors;
+    $("#sectorCard").innerHTML = `<h2>Sector context</h2><p class="sub">Orientation only, not legal advice. Select a sector above to filter controls by its priority.</p>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">` + sec.map(s => `
+        <div><h3 style="font-size:14px;margin:0 0 6px">${esc(s.name)}</h3>
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:4px">Example AI use cases</div>
+        <ul style="margin:0 0 8px;padding-left:18px;font-size:13px">${s.example_use_cases.map(u => `<li>${esc(u)}</li>`).join("")}</ul>
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:4px">Regulatory context</div>
+        <ul style="margin:0 0 8px;padding-left:18px;font-size:13px">${s.regulatory_context.map(u => `<li>${esc(u)}</li>`).join("")}</ul>
+        <div>${s.key_concerns.map(k => `<span class="chip" style="--c:var(--accent)">${esc(k)}</span>`).join("")}</div></div>`).join("") + `</div>`;
+  }
+
+  // ---------- matrix ----------
+  $$("#matrixMode button").forEach(b => b.onclick = () => {
+    state.matrixMode = b.dataset.mode;
+    $$("#matrixMode button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    renderMatrix(filteredControls());
+  });
+  function renderMatrix(ctrls) {
+    const q = state.q.toLowerCase();
+    const head = `<thead><tr><th class="ctrl">Control</th>${FW.map(f => `<th><span class="fw-dot" style="background:${color(f)}"></span>${esc(fw(f).short)}</th>`).join("")}
+      ${DATA.sectors.map(s => `<th>${esc(s.name.split(" ")[0])}</th>`).join("")}</tr></thead>`;
+    const body = ctrls.map(c => `<tr data-id="${c.id}">
+      <td class="ctrl"><span class="id">${c.id}</span><span class="t">${esc(c.title)}</span><span class="cat">${esc(cats[c.category].title)}</span></td>
+      ${FW.map(f => {
+        const ids = c.maps[f] || [];
+        if (state.matrixMode === "count") return `<td style="text-align:center;font-weight:600;color:${ids.length ? color(f) : "var(--muted)"}">${ids.length || "–"}</td>`;
+        return `<td>${ids.map(id => `<span class="chip ${q && (id.toLowerCase().includes(q) || itemTitle(f, id).toLowerCase().includes(q)) ? "hit" : ""}" style="--c:${color(f)}" title="${esc(itemTitle(f, id))}">${esc(id)}</span>`).join("") || `<span style="color:var(--muted)">–</span>`}</td>`;
+      }).join("")}
+      ${DATA.sectors.map(s => `<td><span class="prio ${c.sectors[s.id]}">${c.sectors[s.id]}</span></td>`).join("")}
+    </tr>`).join("");
+    $("#matrix").innerHTML = head + `<tbody>${body || `<tr><td colspan="${FW.length + 4}" class="empty">No controls match the current filters.</td></tr>`}</tbody>`;
+    $("#matrixCount").textContent = `${ctrls.length} control${ctrls.length === 1 ? "" : "s"}`;
+    $$("#matrix tbody tr[data-id]").forEach(tr => tr.onclick = () => openControl(tr.dataset.id));
+  }
+  $("#csvBtn").onclick = () => {
+    const rows = [["control_id", "control_title", "mitigation_category", "framework", "item_id", "item_title", ...DATA.sectors.map(s => "priority_" + s.id)]];
+    filteredControls().forEach(c => FW.forEach(f => (c.maps[f] || []).forEach(id =>
+      rows.push([c.id, c.title, cats[c.category].title, fw(f).short, id, itemTitle(f, id), ...DATA.sectors.map(s => c.sectors[s.id])]))));
+    const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\r\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv" }));
+    a.download = "ai_control_crosswalk_filtered.csv"; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+
+  // ---------- heatmap ----------
+  const heatColor = n => n === 0 ? "var(--heat-0)" : n === 1 ? "var(--heat-1)" : n <= 3 ? "var(--heat-2)" : n <= 6 ? "var(--heat-3)" : "var(--heat-4)";
+  $("#heatLegend").innerHTML = "Items reached: " + [["untreated risk", 0], ["1", 1], ["2–3", 2], ["4–6", 5], ["7+", 8]]
+    .map(([l, n]) => `<span class="sw" style="background:${heatColor(n)}"></span>${l}`).join(" ") +
+    ` <span class="sw" style="background:var(--surface-2)"></span>no items in that framework`;
+  function renderHeatmap(ctrls) {
+    const others = FW.filter(f => f !== "MIT");
+    let lastGroup = "";
+    const rows = fw("MIT").items.map(r => {
+      const via = ctrls.filter(c => (c.maps.MIT || []).includes(r.id));
+      let pre = "";
+      if (r.group !== lastGroup) { lastGroup = r.group; pre = `<tr><td class="domain" colspan="${others.length + 2}">${esc(r.group)}</td></tr>`; }
+      const cells = others.map(f => {
+        const n = new Set(via.flatMap(c => c.maps[f] || [])).size;
+        // A zero here is often expected (e.g. OWASP is security-only), so it is
+        // shown neutral; only an untreated risk (Controls = 0) is flagged red.
+        if (n === 0) return `<td class="cell" style="background:var(--surface-2);color:var(--muted)" title="No ${esc(fw(f).short)} items reached">–</td>`;
+        const strong = n >= 4;
+        return `<td class="cell" style="background:${heatColor(n)};${strong ? "color:#fff" : ""}" title="${n} ${esc(fw(f).short)} item(s)">${n}</td>`;
+      }).join("");
+      const gap = via.length === 0;
+      return pre + `<tr data-risk="${r.id}" ${gap ? `style="--gap:1"` : ""}>
+        <td class="risk" style="${gap ? "box-shadow: inset 4px 0 0 var(--danger)" : ""}"><span class="rid">${r.id.replace("MIT-", "")}</span>${esc(r.title)}${gap ? ` <span class="prio high">gap</span>` : ""}</td>
+        <td class="cell" style="background:${heatColor(via.length)};${via.length >= 4 ? "color:#fff" : ""}">${via.length}</td>${cells}</tr>`;
+    }).join("");
+    $("#heat").innerHTML = `<thead><tr><th class="ctrl">MIT risk subdomain</th><th>Controls</th>${others.map(f => `<th><span class="fw-dot" style="background:${color(f)}"></span>${esc(fw(f).short)}</th>`).join("")}</tr></thead><tbody>${rows}</tbody>`;
+    $$("#heat tr[data-risk]").forEach(tr => tr.onclick = () => openItem("MIT", tr.dataset.risk));
+  }
+
+  // ---------- pivot ----------
+  const pFromFw = $("#pFromFw"), pFromItem = $("#pFromItem"), pToFw = $("#pToFw");
+  FW.forEach(f => {
+    pFromFw.insertAdjacentHTML("beforeend", `<option value="${f}">${esc(fw(f).short)}</option>`);
+    pToFw.insertAdjacentHTML("beforeend", `<option value="${f}">${esc(fw(f).short)}</option>`);
+  });
+  pFromFw.value = "EUAIA"; pToFw.value = "ISO42001";
+  function fillItems(keep) {
+    pFromItem.innerHTML = fw(pFromFw.value).items.map(i => `<option value="${esc(i.id)}">${esc(i.id)} — ${esc(i.title)}</option>`).join("");
+    if (keep && fw(pFromFw.value).items.some(i => i.id === keep)) pFromItem.value = keep;
+  }
+  fillItems("Art.14");
+  pFromFw.onchange = () => { fillItems(); renderPivot(filteredControls()); };
+  pFromItem.onchange = pToFw.onchange = () => renderPivot(filteredControls());
+  $("#pSwap").onclick = () => {
+    const from = pFromFw.value; pFromFw.value = pToFw.value; pToFw.value = from; fillItems(); renderPivot(filteredControls());
+  };
+  function renderPivot(ctrls) {
+    const sf = pFromFw.value, sid = pFromItem.value, tf = pToFw.value;
+    const src = itemIndex[sf + "|" + sid];
+    const via = ctrls.filter(c => (c.maps[sf] || []).includes(sid));
+    const targets = {};
+    via.forEach(c => (c.maps[tf] || []).forEach(t => (targets[t] = targets[t] || []).push(c.id)));
+    const tList = Object.entries(targets).sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0], undefined, { numeric: true }));
+    $("#flow").innerHTML = `
+      <div class="flow-col"><h3>${esc(fw(sf).short)}</h3>
+        <div class="node" style="--c:${color(sf)}" data-node="src" data-open-item="${sf}|${esc(sid)}"><b>${esc(sid)}</b><small>${esc(src.title)}</small></div>
+        <p style="font-size:12.5px;color:var(--muted)">${esc(src.description || "")}</p></div>
+      <div class="flow-col"><h3>Unified controls (${via.length})</h3>
+        ${via.map(c => `<div class="node" style="--c:var(--accent)" data-node="${c.id}" data-open="${c.id}"><b>${c.id}</b><small>${esc(c.title)}</small></div>`).join("") || `<div class="empty">No control in the current filter maps to this item.</div>`}</div>
+      <div class="flow-col"><h3>${esc(fw(tf).short)} (${tList.length})</h3>
+        ${tList.map(([t, cs]) => `<div class="node" style="--c:${color(tf)}" data-node="t:${esc(t)}" data-via="${cs.join(",")}" data-open-item="${tf}|${esc(t)}"><b>${esc(t)}</b><small>${esc(itemTitle(tf, t))}</small></div>`).join("") || `<div class="empty">${sf === tf ? "Pick a different target framework." : "No related items."}</div>`}</div>
+      <svg id="flowSvg"></svg>`;
+    $$("#flow [data-open]").forEach(n => n.onclick = () => openControl(n.dataset.open));
+    $$("#flow [data-open-item]").forEach(n => n.onclick = () => { const [f, i] = n.dataset.openItem.split("|"); openItem(f, i); });
+    requestAnimationFrame(drawFlowLines);
+  }
+  function drawFlowLines() {
+    const svg = $("#flowSvg"); if (!svg || state.view !== "pivot") return;
+    const box = $("#flow").getBoundingClientRect();
+    const pt = (el, side) => { const r = el.getBoundingClientRect(); return [side === "r" ? r.right - box.left : r.left - box.left, r.top - box.top + r.height / 2]; };
+    const curve = ([x1, y1], [x2, y2]) => { const dx = (x2 - x1) / 2; return `M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}`; };
+    const src = $("#flow [data-node=src]");
+    let paths = "";
+    $$("#flow [data-open]").forEach(c => {
+      paths += `<path d="${curve(pt(src, "r"), pt(c, "l"))}"/>`;
+    });
+    $$("#flow [data-via]").forEach(t => t.dataset.via.split(",").forEach(cid => {
+      const c = $(`#flow [data-node="${cid}"]`); if (c) paths += `<path d="${curve(pt(c, "r"), pt(t, "l"))}"/>`;
+    }));
+    svg.innerHTML = paths;
+  }
+  addEventListener("resize", () => requestAnimationFrame(drawFlowLines));
+
+  // ---------- gaps ----------
+  function renderGaps(cov) {
+    const filtered = state.sector || state.cat || state.q;
+    $("#gapIntro").innerHTML = filtered
+      ? "Items not addressed by any control <b>in the current filter</b>. Clear the filters to see gaps in the full control set."
+      : "Items not addressed by any unified control. Gaps in the MIT socioeconomic and AI-welfare subdomains are expected: they are systemic risks that sit largely outside a single organisation's control set, so they are kept visible rather than forced into a mapping.";
+    $("#gapGrid").innerHTML = FW.map(f => `
+      <div class="card" style="border-top:3px solid ${color(f)}">
+        <h2>${esc(fw(f).short)}</h2>
+        <p class="sub">${cov[f].covered}/${cov[f].total} covered (${Math.round(cov[f].pct)}%)</p>
+        ${cov[f].gaps.length ? cov[f].gaps.map(i => `<div class="gap-item"><b>${esc(i.id)}</b>${esc(i.title)}</div>`).join("")
+          : `<div class="ok-msg">✓ No gaps</div>`}
+      </div>`).join("");
+  }
+
+  // ---------- drawer ----------
+  const drawer = $("#drawer"), backdrop = $("#backdrop");
+  function openDrawer(html) { $("#drawerBody").innerHTML = html; drawer.classList.add("open"); backdrop.classList.add("open"); drawer.setAttribute("aria-hidden", "false"); drawer.scrollTop = 0; }
+  function closeDrawer() { drawer.classList.remove("open"); backdrop.classList.remove("open"); drawer.setAttribute("aria-hidden", "true"); }
+  backdrop.onclick = closeDrawer; $("#drawerClose").onclick = closeDrawer;
+  addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+
+  function openControl(id) {
+    const c = DATA.controls.find(x => x.id === id);
+    openDrawer(`
+      <div style="color:var(--muted);font-size:12px;font-weight:600">${c.id} · ${esc(cats[c.category].title)}</div>
+      <h2>${esc(c.title)}</h2>
+      <p>${esc(c.objective)}</p>
+      <h4>Sector priority</h4>
+      <div class="sector-pills">${DATA.sectors.map(s => `<div class="sector-pill">${esc(s.name)}: <span class="prio ${c.sectors[s.id]}">${c.sectors[s.id]}</span>
+        ${c.sector_notes && c.sector_notes[s.id] ? `<div style="font-size:12px;color:var(--muted);margin-top:3px;max-width:220px">${esc(c.sector_notes[s.id])}</div>` : ""}</div>`).join("")}</div>
+      <h4>Implementation guidance</h4><ul>${(c.guidance || []).map(g => `<li>${esc(g)}</li>`).join("")}</ul>
+      <h4>Evidence for audit</h4><ul>${(c.evidence || []).map(g => `<li>${esc(g)}</li>`).join("")}</ul>
+      <h4>Mappings</h4>
+      ${FW.map(f => (c.maps[f] || []).length ? `<div class="map-group"><div style="font-weight:600;font-size:13px"><span class="fw-dot" style="background:${color(f)}"></span>${esc(fw(f).name)}</div>
+        ${(c.maps[f]).map(id => `<div class="item"><span class="chip" style="--c:${color(f)}">${esc(id)}</span>${esc(itemTitle(f, id))}</div>`).join("")}</div>` : "").join("")}
+    `);
+  }
+  function openItem(f, id) {
+    const i = itemIndex[f + "|" + id];
+    const via = DATA.controls.filter(c => (c.maps[f] || []).includes(id));
+    openDrawer(`
+      <div style="color:var(--muted);font-size:12px;font-weight:600"><span class="fw-dot" style="background:${color(f)}"></span>${esc(fw(f).name)}</div>
+      <h2>${esc(id)} — ${esc(i.title)}</h2>
+      ${i.group ? `<div style="color:var(--muted);font-size:12.5px">${esc(i.group)}</div>` : ""}
+      <p>${esc(i.description || "")}</p>
+      <h4>Treated by ${via.length} unified control${via.length === 1 ? "" : "s"}</h4>
+      ${via.map(c => `<div class="node" style="--c:var(--accent)" data-open="${c.id}"><b>${c.id}</b><small>${esc(c.title)}</small></div>`).join("") || `<div class="empty">No control maps to this item — a coverage gap.</div>`}
+      <h4>Source</h4><a href="${esc(fw(f).source_url)}" target="_blank" rel="noopener">${esc(fw(f).source_url)} ↗</a>
+    `);
+    $$("#drawerBody [data-open]").forEach(n => n.onclick = () => openControl(n.dataset.open));
+  }
+
+  // ---------- render ----------
+  function render() {
+    const ctrls = filteredControls();
+    const cov = coverage(ctrls);
+    updateNote(ctrls.length);
+    renderOverview(ctrls, cov);
+    renderMatrix(ctrls);
+    renderHeatmap(ctrls);
+    renderPivot(ctrls);
+    renderGaps(cov);
+  }
+  $("#footer").innerHTML = `Dataset v${esc(DATA.meta.dataset_version)} · built ${esc(DATA.meta.built)} ·
+    Mappings are analyst judgement ("supports / contributes to"), not official equivalences from the framework owners.
+    Framework names and identifiers belong to their owners; descriptions are paraphrased. ISO/IEC 42001 control text is not reproduced.`;
+  render();
+})();
+</script>
+</body>
+</html>

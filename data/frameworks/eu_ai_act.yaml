@@ -1,0 +1,30 @@
+id: EUAIA
+name: EU AI Act - Regulation (EU) 2024/1689 (selected articles)
+short: EU AI Act
+kind: regulation
+version: "Regulation (EU) 2024/1689 - selected obligation articles"
+source_url: https://eur-lex.europa.eu/eli/reg/2024/1689/oj
+licence_note: >-
+  Article numbers and short titles only; summaries are paraphrased. Application
+  dates are deliberately not hard-coded because they have been subject to
+  amendment proposals - check the Official Journal for the current position.
+items:
+  - {id: Art.4, group: "General", title: "AI literacy", description: "Providers and deployers ensure staff have sufficient AI literacy."}
+  - {id: Art.5, group: "Prohibited practices", title: "Prohibited AI practices", description: "Bans specified practices such as manipulative techniques and social scoring."}
+  - {id: Art.6, group: "High-risk classification", title: "Classification rules for high-risk AI systems", description: "When an AI system counts as high-risk (Annex I products, Annex III use cases)."}
+  - {id: Art.9, group: "High-risk requirements", title: "Risk management system", description: "Continuous, iterative risk management across the lifecycle."}
+  - {id: Art.10, group: "High-risk requirements", title: "Data and data governance", description: "Quality, relevance, representativeness and bias examination of data sets."}
+  - {id: Art.11, group: "High-risk requirements", title: "Technical documentation", description: "Documentation demonstrating compliance, kept up to date."}
+  - {id: Art.12, group: "High-risk requirements", title: "Record-keeping", description: "Automatic logging of events over the system's lifetime."}
+  - {id: Art.13, group: "High-risk requirements", title: "Transparency and provision of information to deployers", description: "Instructions for use enabling deployers to interpret and use outputs."}
+  - {id: Art.14, group: "High-risk requirements", title: "Human oversight", description: "Design enabling effective oversight by natural persons, including the ability to intervene."}
+  - {id: Art.15, group: "High-risk requirements", title: "Accuracy, robustness and cybersecurity", description: "Appropriate accuracy, resilience and protection against attacks such as poisoning."}
+  - {id: Art.17, group: "Provider obligations", title: "Quality management system", description: "Documented QMS covering policies, procedures and accountability."}
+  - {id: Art.25, group: "Value chain", title: "Responsibilities along the AI value chain", description: "When distributors, importers or deployers take on provider obligations; cooperation duties."}
+  - {id: Art.26, group: "Deployer obligations", title: "Obligations of deployers of high-risk AI systems", description: "Use per instructions, assign human oversight, monitor and keep logs."}
+  - {id: Art.27, group: "Deployer obligations", title: "Fundamental rights impact assessment", description: "Certain deployers assess impacts on fundamental rights before use."}
+  - {id: Art.50, group: "Transparency", title: "Transparency obligations for certain AI systems", description: "Disclose AI interaction and mark synthetic or deepfake content."}
+  - {id: Art.53, group: "General-purpose AI", title: "Obligations for providers of general-purpose AI models", description: "Technical documentation, downstream information and copyright policy."}
+  - {id: Art.55, group: "General-purpose AI", title: "Obligations for GPAI models with systemic risk", description: "Model evaluation, adversarial testing, incident reporting and cybersecurity."}
+  - {id: Art.72, group: "Post-market", title: "Post-market monitoring", description: "Providers collect and analyse performance data after placing on the market."}
+  - {id: Art.73, group: "Post-market", title: "Reporting of serious incidents", description: "Providers report serious incidents to market surveillance authorities."}

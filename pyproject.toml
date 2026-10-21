@@ -1,0 +1,16 @@
+[project]
+name = "ai-control-crosswalk"
+version = "1.0.0"
+description = "Unified AI control crosswalk: MIT AI Risk Repository, OWASP GenAI (LLM + Agentic), OECD AI Principles, ISO/IEC 42001 and the EU AI Act, with sector views and an interactive dashboard."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Arohi Bhate" }]
+dependencies = ["PyYAML>=6.0", "openpyxl>=3.1"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

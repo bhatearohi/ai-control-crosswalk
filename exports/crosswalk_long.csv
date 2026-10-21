@@ -1,0 +1,245 @@
+control_id,control_title,mitigation_category,framework,item_id,item_title,priority_manufacturing,priority_finance,priority_healthcare
+AICC-01,AI governance policy and accountability,Governance & Oversight Controls,MIT Risk Domains,MIT-6.5,Governance failure,high,high,high
+AICC-01,AI governance policy and accountability,Governance & Oversight Controls,OECD,OECD-1.5,Accountability,high,high,high
+AICC-01,AI governance policy and accountability,Governance & Oversight Controls,ISO 42001,A.2.2,AI policy,high,high,high
+AICC-01,AI governance policy and accountability,Governance & Oversight Controls,ISO 42001,A.2.3,Alignment with other organisational policies,high,high,high
+AICC-01,AI governance policy and accountability,Governance & Oversight Controls,ISO 42001,A.2.4,Review of the AI policy,high,high,high
+AICC-01,AI governance policy and accountability,Governance & Oversight Controls,ISO 42001,A.3.2,AI roles and responsibilities,high,high,high
+AICC-01,AI governance policy and accountability,Governance & Oversight Controls,EU AI Act,Art.17,Quality management system,high,high,high
+AICC-02,"AI roles, responsibilities and concern reporting",Governance & Oversight Controls,MIT Risk Domains,MIT-6.5,Governance failure,medium,high,high
+AICC-02,"AI roles, responsibilities and concern reporting",Governance & Oversight Controls,OECD,OECD-1.5,Accountability,medium,high,high
+AICC-02,"AI roles, responsibilities and concern reporting",Governance & Oversight Controls,ISO 42001,A.3.2,AI roles and responsibilities,medium,high,high
+AICC-02,"AI roles, responsibilities and concern reporting",Governance & Oversight Controls,ISO 42001,A.3.3,Reporting of concerns,medium,high,high
+AICC-02,"AI roles, responsibilities and concern reporting",Governance & Oversight Controls,EU AI Act,Art.17,Quality management system,medium,high,high
+AICC-02,"AI roles, responsibilities and concern reporting",Governance & Oversight Controls,EU AI Act,Art.26,Obligations of deployers of high-risk AI systems,medium,high,high
+AICC-03,AI system inventory and use-case register,Governance & Oversight Controls,MIT Risk Domains,MIT-6.5,Governance failure,high,high,high
+AICC-03,AI system inventory and use-case register,Governance & Oversight Controls,MIT Risk Domains,MIT-5.1,Overreliance and unsafe use,high,high,high
+AICC-03,AI system inventory and use-case register,Governance & Oversight Controls,OECD,OECD-1.5,Accountability,high,high,high
+AICC-03,AI system inventory and use-case register,Governance & Oversight Controls,ISO 42001,A.4.2,Resource documentation,high,high,high
+AICC-03,AI system inventory and use-case register,Governance & Oversight Controls,ISO 42001,A.9.4,Intended use of the AI system,high,high,high
+AICC-03,AI system inventory and use-case register,Governance & Oversight Controls,EU AI Act,Art.6,Classification rules for high-risk AI systems,high,high,high
+AICC-03,AI system inventory and use-case register,Governance & Oversight Controls,EU AI Act,Art.26,Obligations of deployers of high-risk AI systems,high,high,high
+AICC-04,Risk classification and prohibited-use screening,Governance & Oversight Controls,MIT Risk Domains,MIT-4.1,"Disinformation, surveillance and influence at scale",medium,high,high
+AICC-04,Risk classification and prohibited-use screening,Governance & Oversight Controls,MIT Risk Domains,MIT-4.3,"Fraud, scams and targeted manipulation",medium,high,high
+AICC-04,Risk classification and prohibited-use screening,Governance & Oversight Controls,MIT Risk Domains,MIT-5.2,Loss of human agency and autonomy,medium,high,high
+AICC-04,Risk classification and prohibited-use screening,Governance & Oversight Controls,MIT Risk Domains,MIT-6.5,Governance failure,medium,high,high
+AICC-04,Risk classification and prohibited-use screening,Governance & Oversight Controls,OECD,OECD-1.2,"Respect for the rule of law, human rights and democratic values, including fairness and privacy",medium,high,high
+AICC-04,Risk classification and prohibited-use screening,Governance & Oversight Controls,ISO 42001,A.5.2,AI system impact assessment process,medium,high,high
+AICC-04,Risk classification and prohibited-use screening,Governance & Oversight Controls,ISO 42001,A.9.4,Intended use of the AI system,medium,high,high
+AICC-04,Risk classification and prohibited-use screening,Governance & Oversight Controls,EU AI Act,Art.5,Prohibited AI practices,medium,high,high
+AICC-04,Risk classification and prohibited-use screening,Governance & Oversight Controls,EU AI Act,Art.6,Classification rules for high-risk AI systems,medium,high,high
+AICC-05,AI risk management lifecycle,Governance & Oversight Controls,MIT Risk Domains,MIT-6.5,Governance failure,high,high,high
+AICC-05,AI risk management lifecycle,Governance & Oversight Controls,MIT Risk Domains,MIT-7.3,Lack of capability or robustness,high,high,high
+AICC-05,AI risk management lifecycle,Governance & Oversight Controls,OECD,OECD-1.4,"Robustness, security and safety",high,high,high
+AICC-05,AI risk management lifecycle,Governance & Oversight Controls,OECD,OECD-1.5,Accountability,high,high,high
+AICC-05,AI risk management lifecycle,Governance & Oversight Controls,ISO 42001,A.5.2,AI system impact assessment process,high,high,high
+AICC-05,AI risk management lifecycle,Governance & Oversight Controls,ISO 42001,A.6.1.2,Objectives for responsible development of AI system,high,high,high
+AICC-05,AI risk management lifecycle,Governance & Oversight Controls,EU AI Act,Art.9,Risk management system,high,high,high
+AICC-06,AI impact assessment on individuals and society,Governance & Oversight Controls,MIT Risk Domains,MIT-1.1,Unfair discrimination and misrepresentation,medium,high,high
+AICC-06,AI impact assessment on individuals and society,Governance & Oversight Controls,MIT Risk Domains,MIT-1.3,Unequal performance across groups,medium,high,high
+AICC-06,AI impact assessment on individuals and society,Governance & Oversight Controls,MIT Risk Domains,MIT-6.2,Increased inequality and decline in employment quality,medium,high,high
+AICC-06,AI impact assessment on individuals and society,Governance & Oversight Controls,MIT Risk Domains,MIT-6.6,Environmental harm,medium,high,high
+AICC-06,AI impact assessment on individuals and society,Governance & Oversight Controls,OECD,OECD-1.1,"Inclusive growth, sustainable development and well-being",medium,high,high
+AICC-06,AI impact assessment on individuals and society,Governance & Oversight Controls,OECD,OECD-1.2,"Respect for the rule of law, human rights and democratic values, including fairness and privacy",medium,high,high
+AICC-06,AI impact assessment on individuals and society,Governance & Oversight Controls,ISO 42001,A.5.2,AI system impact assessment process,medium,high,high
+AICC-06,AI impact assessment on individuals and society,Governance & Oversight Controls,ISO 42001,A.5.3,Documentation of AI system impact assessments,medium,high,high
+AICC-06,AI impact assessment on individuals and society,Governance & Oversight Controls,ISO 42001,A.5.4,Assessing AI system impact on individuals or groups,medium,high,high
+AICC-06,AI impact assessment on individuals and society,Governance & Oversight Controls,ISO 42001,A.5.5,Assessing societal impacts of AI systems,medium,high,high
+AICC-06,AI impact assessment on individuals and society,Governance & Oversight Controls,EU AI Act,Art.27,Fundamental rights impact assessment,medium,high,high
+AICC-07,Training and evaluation data governance and quality,Operational Process Controls,MIT Risk Domains,MIT-1.1,Unfair discrimination and misrepresentation,medium,high,high
+AICC-07,Training and evaluation data governance and quality,Operational Process Controls,MIT Risk Domains,MIT-1.3,Unequal performance across groups,medium,high,high
+AICC-07,Training and evaluation data governance and quality,Operational Process Controls,MIT Risk Domains,MIT-7.3,Lack of capability or robustness,medium,high,high
+AICC-07,Training and evaluation data governance and quality,Operational Process Controls,OWASP LLM,LLM05,Data and Model Poisoning,medium,high,high
+AICC-07,Training and evaluation data governance and quality,Operational Process Controls,OECD,OECD-1.2,"Respect for the rule of law, human rights and democratic values, including fairness and privacy",medium,high,high
+AICC-07,Training and evaluation data governance and quality,Operational Process Controls,OECD,OECD-1.4,"Robustness, security and safety",medium,high,high
+AICC-07,Training and evaluation data governance and quality,Operational Process Controls,ISO 42001,A.7.2,Data for development and enhancement of AI system,medium,high,high
+AICC-07,Training and evaluation data governance and quality,Operational Process Controls,ISO 42001,A.7.4,Quality of data for AI systems,medium,high,high
+AICC-07,Training and evaluation data governance and quality,Operational Process Controls,ISO 42001,A.7.6,Data preparation,medium,high,high
+AICC-07,Training and evaluation data governance and quality,Operational Process Controls,EU AI Act,Art.10,Data and data governance,medium,high,high
+AICC-08,Data provenance and poisoning defences,Technical & Security Controls,MIT Risk Domains,MIT-2.2,AI system security vulnerabilities and attacks,high,high,high
+AICC-08,Data provenance and poisoning defences,Technical & Security Controls,MIT Risk Domains,MIT-7.3,Lack of capability or robustness,high,high,high
+AICC-08,Data provenance and poisoning defences,Technical & Security Controls,OWASP LLM,LLM05,Data and Model Poisoning,high,high,high
+AICC-08,Data provenance and poisoning defences,Technical & Security Controls,OWASP LLM,LLM09,Vector and Embedding Weaknesses,high,high,high
+AICC-08,Data provenance and poisoning defences,Technical & Security Controls,OWASP Agentic,ASI06,Memory and Context Poisoning,high,high,high
+AICC-08,Data provenance and poisoning defences,Technical & Security Controls,OECD,OECD-1.4,"Robustness, security and safety",high,high,high
+AICC-08,Data provenance and poisoning defences,Technical & Security Controls,ISO 42001,A.7.3,Acquisition of data,high,high,high
+AICC-08,Data provenance and poisoning defences,Technical & Security Controls,ISO 42001,A.7.5,Data provenance,high,high,high
+AICC-08,Data provenance and poisoning defences,Technical & Security Controls,EU AI Act,Art.10,Data and data governance,high,high,high
+AICC-08,Data provenance and poisoning defences,Technical & Security Controls,EU AI Act,Art.15,"Accuracy, robustness and cybersecurity",high,high,high
+AICC-09,Privacy and sensitive data protection in AI,Technical & Security Controls,MIT Risk Domains,MIT-2.1,Compromise of privacy,high,high,high
+AICC-09,Privacy and sensitive data protection in AI,Technical & Security Controls,OWASP LLM,LLM02,Sensitive Information Disclosure,high,high,high
+AICC-09,Privacy and sensitive data protection in AI,Technical & Security Controls,OWASP LLM,LLM08,Hidden Context Exposure,high,high,high
+AICC-09,Privacy and sensitive data protection in AI,Technical & Security Controls,OECD,OECD-1.2,"Respect for the rule of law, human rights and democratic values, including fairness and privacy",high,high,high
+AICC-09,Privacy and sensitive data protection in AI,Technical & Security Controls,ISO 42001,A.4.3,Data resources,high,high,high
+AICC-09,Privacy and sensitive data protection in AI,Technical & Security Controls,ISO 42001,A.7.2,Data for development and enhancement of AI system,high,high,high
+AICC-09,Privacy and sensitive data protection in AI,Technical & Security Controls,EU AI Act,Art.10,Data and data governance,high,high,high
+AICC-10,Bias and fairness testing,Operational Process Controls,MIT Risk Domains,MIT-1.1,Unfair discrimination and misrepresentation,low,high,high
+AICC-10,Bias and fairness testing,Operational Process Controls,MIT Risk Domains,MIT-1.3,Unequal performance across groups,low,high,high
+AICC-10,Bias and fairness testing,Operational Process Controls,OECD,OECD-1.2,"Respect for the rule of law, human rights and democratic values, including fairness and privacy",low,high,high
+AICC-10,Bias and fairness testing,Operational Process Controls,ISO 42001,A.5.4,Assessing AI system impact on individuals or groups,low,high,high
+AICC-10,Bias and fairness testing,Operational Process Controls,ISO 42001,A.6.2.4,AI system verification and validation,low,high,high
+AICC-10,Bias and fairness testing,Operational Process Controls,EU AI Act,Art.10,Data and data governance,low,high,high
+AICC-10,Bias and fairness testing,Operational Process Controls,EU AI Act,Art.15,"Accuracy, robustness and cybersecurity",low,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,MIT Risk Domains,MIT-2.2,AI system security vulnerabilities and attacks,high,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,MIT Risk Domains,MIT-3.1,False or misleading information,high,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,MIT Risk Domains,MIT-4.2,"Cyberattacks, weapon development and mass harm",high,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,MIT Risk Domains,MIT-7.3,Lack of capability or robustness,high,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,OWASP LLM,LLM01,Prompt Injection,high,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,OWASP LLM,LLM07,Misinformation,high,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,OWASP LLM,LLM10,Improper Output Handling,high,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,OWASP Agentic,ASI01,Agent Goal Hijack,high,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,OECD,OECD-1.4,"Robustness, security and safety",high,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,ISO 42001,A.6.2.4,AI system verification and validation,high,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,EU AI Act,Art.15,"Accuracy, robustness and cybersecurity",high,high,high
+AICC-11,"Verification, validation and adversarial testing",Operational Process Controls,EU AI Act,Art.55,Obligations for GPAI models with systemic risk,high,high,high
+AICC-12,Prompt injection and hidden context protection,Technical & Security Controls,MIT Risk Domains,MIT-2.2,AI system security vulnerabilities and attacks,medium,high,high
+AICC-12,Prompt injection and hidden context protection,Technical & Security Controls,OWASP LLM,LLM01,Prompt Injection,medium,high,high
+AICC-12,Prompt injection and hidden context protection,Technical & Security Controls,OWASP LLM,LLM08,Hidden Context Exposure,medium,high,high
+AICC-12,Prompt injection and hidden context protection,Technical & Security Controls,OWASP Agentic,ASI01,Agent Goal Hijack,medium,high,high
+AICC-12,Prompt injection and hidden context protection,Technical & Security Controls,OWASP Agentic,ASI06,Memory and Context Poisoning,medium,high,high
+AICC-12,Prompt injection and hidden context protection,Technical & Security Controls,OECD,OECD-1.4,"Robustness, security and safety",medium,high,high
+AICC-12,Prompt injection and hidden context protection,Technical & Security Controls,ISO 42001,A.6.1.3,Processes for responsible AI system design and development,medium,high,high
+AICC-12,Prompt injection and hidden context protection,Technical & Security Controls,ISO 42001,A.6.2.2,AI system requirements and specification,medium,high,high
+AICC-12,Prompt injection and hidden context protection,Technical & Security Controls,EU AI Act,Art.15,"Accuracy, robustness and cybersecurity",medium,high,high
+AICC-13,Output validation and content safeguards,Technical & Security Controls,MIT Risk Domains,MIT-1.2,Exposure to toxic content,medium,high,high
+AICC-13,Output validation and content safeguards,Technical & Security Controls,MIT Risk Domains,MIT-3.1,False or misleading information,medium,high,high
+AICC-13,Output validation and content safeguards,Technical & Security Controls,MIT Risk Domains,MIT-2.2,AI system security vulnerabilities and attacks,medium,high,high
+AICC-13,Output validation and content safeguards,Technical & Security Controls,OWASP LLM,LLM07,Misinformation,medium,high,high
+AICC-13,Output validation and content safeguards,Technical & Security Controls,OWASP LLM,LLM10,Improper Output Handling,medium,high,high
+AICC-13,Output validation and content safeguards,Technical & Security Controls,OWASP Agentic,ASI05,Unexpected Code Execution,medium,high,high
+AICC-13,Output validation and content safeguards,Technical & Security Controls,OECD,OECD-1.4,"Robustness, security and safety",medium,high,high
+AICC-13,Output validation and content safeguards,Technical & Security Controls,ISO 42001,A.6.2.2,AI system requirements and specification,medium,high,high
+AICC-13,Output validation and content safeguards,Technical & Security Controls,EU AI Act,Art.15,"Accuracy, robustness and cybersecurity",medium,high,high
+AICC-13,Output validation and content safeguards,Technical & Security Controls,EU AI Act,Art.50,Transparency obligations for certain AI systems,medium,high,high
+AICC-14,Agent permissions and least agency,Technical & Security Controls,MIT Risk Domains,MIT-5.2,Loss of human agency and autonomy,high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,MIT Risk Domains,MIT-7.1,AI pursuing its own goals in conflict with human goals,high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,MIT Risk Domains,MIT-7.6,Multi-agent risks,high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,OWASP LLM,LLM03,Excessive Agency,high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,OWASP Agentic,ASI02,Tool Misuse and Exploitation,high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,OWASP Agentic,ASI03,Identity and Privilege Abuse,high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,OWASP Agentic,ASI07,Insecure Inter-Agent Communication,high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,OECD,OECD-1.4,"Robustness, security and safety",high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,OECD,OECD-1.5,Accountability,high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,ISO 42001,A.6.1.3,Processes for responsible AI system design and development,high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,ISO 42001,A.9.2,Processes for responsible use of AI systems,high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,EU AI Act,Art.14,Human oversight,high,high,medium
+AICC-14,Agent permissions and least agency,Technical & Security Controls,EU AI Act,Art.15,"Accuracy, robustness and cybersecurity",high,high,medium
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,MIT Risk Domains,MIT-5.1,Overreliance and unsafe use,high,high,high
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,MIT Risk Domains,MIT-5.2,Loss of human agency and autonomy,high,high,high
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,MIT Risk Domains,MIT-7.1,AI pursuing its own goals in conflict with human goals,high,high,high
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,OWASP Agentic,ASI09,Human-Agent Trust Exploitation,high,high,high
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,OWASP Agentic,ASI10,Rogue Agents,high,high,high
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,OECD,OECD-1.2,"Respect for the rule of law, human rights and democratic values, including fairness and privacy",high,high,high
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,OECD,OECD-1.4,"Robustness, security and safety",high,high,high
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,OECD,OECD-1.5,Accountability,high,high,high
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,ISO 42001,A.9.2,Processes for responsible use of AI systems,high,high,high
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,ISO 42001,A.9.3,Objectives for responsible use of AI system,high,high,high
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,EU AI Act,Art.14,Human oversight,high,high,high
+AICC-15,Human oversight and intervention,Governance & Oversight Controls,EU AI Act,Art.26,Obligations of deployers of high-risk AI systems,high,high,high
+AICC-16,Transparency to users and AI disclosure,Transparency & Accountability Controls,MIT Risk Domains,MIT-3.1,False or misleading information,medium,high,high
+AICC-16,Transparency to users and AI disclosure,Transparency & Accountability Controls,MIT Risk Domains,MIT-3.2,Pollution of information ecosystem,medium,high,high
+AICC-16,Transparency to users and AI disclosure,Transparency & Accountability Controls,MIT Risk Domains,MIT-5.1,Overreliance and unsafe use,medium,high,high
+AICC-16,Transparency to users and AI disclosure,Transparency & Accountability Controls,MIT Risk Domains,MIT-7.4,Lack of transparency or interpretability,medium,high,high
+AICC-16,Transparency to users and AI disclosure,Transparency & Accountability Controls,OECD,OECD-1.3,Transparency and explainability,medium,high,high
+AICC-16,Transparency to users and AI disclosure,Transparency & Accountability Controls,ISO 42001,A.8.2,System documentation and information for users,medium,high,high
+AICC-16,Transparency to users and AI disclosure,Transparency & Accountability Controls,ISO 42001,A.8.5,Information for interested parties,medium,high,high
+AICC-16,Transparency to users and AI disclosure,Transparency & Accountability Controls,EU AI Act,Art.13,Transparency and provision of information to deployers,medium,high,high
+AICC-16,Transparency to users and AI disclosure,Transparency & Accountability Controls,EU AI Act,Art.50,Transparency obligations for certain AI systems,medium,high,high
+AICC-17,Explainability and technical documentation,Transparency & Accountability Controls,MIT Risk Domains,MIT-7.4,Lack of transparency or interpretability,medium,high,high
+AICC-17,Explainability and technical documentation,Transparency & Accountability Controls,OECD,OECD-1.3,Transparency and explainability,medium,high,high
+AICC-17,Explainability and technical documentation,Transparency & Accountability Controls,OECD,OECD-1.5,Accountability,medium,high,high
+AICC-17,Explainability and technical documentation,Transparency & Accountability Controls,ISO 42001,A.6.2.3,Documentation of AI system design and development,medium,high,high
+AICC-17,Explainability and technical documentation,Transparency & Accountability Controls,ISO 42001,A.6.2.7,AI system technical documentation,medium,high,high
+AICC-17,Explainability and technical documentation,Transparency & Accountability Controls,EU AI Act,Art.11,Technical documentation,medium,high,high
+AICC-17,Explainability and technical documentation,Transparency & Accountability Controls,EU AI Act,Art.13,Transparency and provision of information to deployers,medium,high,high
+AICC-17,Explainability and technical documentation,Transparency & Accountability Controls,EU AI Act,Art.53,Obligations for providers of general-purpose AI models,medium,high,high
+AICC-18,Event logging and traceability,Transparency & Accountability Controls,MIT Risk Domains,MIT-7.4,Lack of transparency or interpretability,medium,high,high
+AICC-18,Event logging and traceability,Transparency & Accountability Controls,MIT Risk Domains,MIT-2.2,AI system security vulnerabilities and attacks,medium,high,high
+AICC-18,Event logging and traceability,Transparency & Accountability Controls,OWASP Agentic,ASI10,Rogue Agents,medium,high,high
+AICC-18,Event logging and traceability,Transparency & Accountability Controls,OECD,OECD-1.5,Accountability,medium,high,high
+AICC-18,Event logging and traceability,Transparency & Accountability Controls,ISO 42001,A.6.2.8,AI system recording of event logs,medium,high,high
+AICC-18,Event logging and traceability,Transparency & Accountability Controls,EU AI Act,Art.12,Record-keeping,medium,high,high
+AICC-18,Event logging and traceability,Transparency & Accountability Controls,EU AI Act,Art.26,Obligations of deployers of high-risk AI systems,medium,high,high
+AICC-19,AI supply chain and third-party model assurance,Governance & Oversight Controls,MIT Risk Domains,MIT-2.2,AI system security vulnerabilities and attacks,high,high,high
+AICC-19,AI supply chain and third-party model assurance,Governance & Oversight Controls,MIT Risk Domains,MIT-6.5,Governance failure,high,high,high
+AICC-19,AI supply chain and third-party model assurance,Governance & Oversight Controls,OWASP LLM,LLM04,Supply Chain,high,high,high
+AICC-19,AI supply chain and third-party model assurance,Governance & Oversight Controls,OWASP Agentic,ASI04,Agentic Supply Chain Vulnerabilities,high,high,high
+AICC-19,AI supply chain and third-party model assurance,Governance & Oversight Controls,OECD,OECD-1.5,Accountability,high,high,high
+AICC-19,AI supply chain and third-party model assurance,Governance & Oversight Controls,ISO 42001,A.4.4,Tooling resources,high,high,high
+AICC-19,AI supply chain and third-party model assurance,Governance & Oversight Controls,ISO 42001,A.10.2,Allocating responsibilities,high,high,high
+AICC-19,AI supply chain and third-party model assurance,Governance & Oversight Controls,ISO 42001,A.10.3,Suppliers,high,high,high
+AICC-19,AI supply chain and third-party model assurance,Governance & Oversight Controls,EU AI Act,Art.25,Responsibilities along the AI value chain,high,high,high
+AICC-19,AI supply chain and third-party model assurance,Governance & Oversight Controls,EU AI Act,Art.53,Obligations for providers of general-purpose AI models,high,high,high
+AICC-20,Model and AI infrastructure security,Technical & Security Controls,MIT Risk Domains,MIT-2.2,AI system security vulnerabilities and attacks,high,high,high
+AICC-20,Model and AI infrastructure security,Technical & Security Controls,OWASP LLM,LLM04,Supply Chain,high,high,high
+AICC-20,Model and AI infrastructure security,Technical & Security Controls,OWASP LLM,LLM09,Vector and Embedding Weaknesses,high,high,high
+AICC-20,Model and AI infrastructure security,Technical & Security Controls,OWASP Agentic,ASI03,Identity and Privilege Abuse,high,high,high
+AICC-20,Model and AI infrastructure security,Technical & Security Controls,OWASP Agentic,ASI05,Unexpected Code Execution,high,high,high
+AICC-20,Model and AI infrastructure security,Technical & Security Controls,OECD,OECD-1.4,"Robustness, security and safety",high,high,high
+AICC-20,Model and AI infrastructure security,Technical & Security Controls,ISO 42001,A.4.5,System and computing resources,high,high,high
+AICC-20,Model and AI infrastructure security,Technical & Security Controls,ISO 42001,A.6.2.5,AI system deployment,high,high,high
+AICC-20,Model and AI infrastructure security,Technical & Security Controls,EU AI Act,Art.15,"Accuracy, robustness and cybersecurity",high,high,high
+AICC-21,Resource abuse and cascading failure protection,Technical & Security Controls,MIT Risk Domains,MIT-2.2,AI system security vulnerabilities and attacks,medium,high,medium
+AICC-21,Resource abuse and cascading failure protection,Technical & Security Controls,MIT Risk Domains,MIT-6.6,Environmental harm,medium,high,medium
+AICC-21,Resource abuse and cascading failure protection,Technical & Security Controls,MIT Risk Domains,MIT-7.6,Multi-agent risks,medium,high,medium
+AICC-21,Resource abuse and cascading failure protection,Technical & Security Controls,OWASP LLM,LLM06,Unbounded Consumption,medium,high,medium
+AICC-21,Resource abuse and cascading failure protection,Technical & Security Controls,OWASP Agentic,ASI08,Cascading Failures,medium,high,medium
+AICC-21,Resource abuse and cascading failure protection,Technical & Security Controls,OECD,OECD-1.4,"Robustness, security and safety",medium,high,medium
+AICC-21,Resource abuse and cascading failure protection,Technical & Security Controls,ISO 42001,A.4.5,System and computing resources,medium,high,medium
+AICC-21,Resource abuse and cascading failure protection,Technical & Security Controls,ISO 42001,A.6.2.6,AI system operation and monitoring,medium,high,medium
+AICC-21,Resource abuse and cascading failure protection,Technical & Security Controls,EU AI Act,Art.15,"Accuracy, robustness and cybersecurity",medium,high,medium
+AICC-22,Deployment gates and change management,Operational Process Controls,MIT Risk Domains,MIT-7.3,Lack of capability or robustness,high,high,high
+AICC-22,Deployment gates and change management,Operational Process Controls,OECD,OECD-1.4,"Robustness, security and safety",high,high,high
+AICC-22,Deployment gates and change management,Operational Process Controls,ISO 42001,A.6.1.3,Processes for responsible AI system design and development,high,high,high
+AICC-22,Deployment gates and change management,Operational Process Controls,ISO 42001,A.6.2.5,AI system deployment,high,high,high
+AICC-22,Deployment gates and change management,Operational Process Controls,EU AI Act,Art.9,Risk management system,high,high,high
+AICC-22,Deployment gates and change management,Operational Process Controls,EU AI Act,Art.17,Quality management system,high,high,high
+AICC-23,Post-deployment monitoring and drift management,Operational Process Controls,MIT Risk Domains,MIT-3.1,False or misleading information,high,high,high
+AICC-23,Post-deployment monitoring and drift management,Operational Process Controls,MIT Risk Domains,MIT-7.3,Lack of capability or robustness,high,high,high
+AICC-23,Post-deployment monitoring and drift management,Operational Process Controls,MIT Risk Domains,MIT-7.6,Multi-agent risks,high,high,high
+AICC-23,Post-deployment monitoring and drift management,Operational Process Controls,OWASP LLM,LLM07,Misinformation,high,high,high
+AICC-23,Post-deployment monitoring and drift management,Operational Process Controls,OWASP Agentic,ASI08,Cascading Failures,high,high,high
+AICC-23,Post-deployment monitoring and drift management,Operational Process Controls,OWASP Agentic,ASI10,Rogue Agents,high,high,high
+AICC-23,Post-deployment monitoring and drift management,Operational Process Controls,OECD,OECD-1.4,"Robustness, security and safety",high,high,high
+AICC-23,Post-deployment monitoring and drift management,Operational Process Controls,ISO 42001,A.6.2.6,AI system operation and monitoring,high,high,high
+AICC-23,Post-deployment monitoring and drift management,Operational Process Controls,EU AI Act,Art.26,Obligations of deployers of high-risk AI systems,high,high,high
+AICC-23,Post-deployment monitoring and drift management,Operational Process Controls,EU AI Act,Art.72,Post-market monitoring,high,high,high
+AICC-24,AI incident management and reporting,Operational Process Controls,MIT Risk Domains,MIT-6.5,Governance failure,high,high,high
+AICC-24,AI incident management and reporting,Operational Process Controls,MIT Risk Domains,MIT-7.3,Lack of capability or robustness,high,high,high
+AICC-24,AI incident management and reporting,Operational Process Controls,OWASP Agentic,ASI08,Cascading Failures,high,high,high
+AICC-24,AI incident management and reporting,Operational Process Controls,OWASP Agentic,ASI10,Rogue Agents,high,high,high
+AICC-24,AI incident management and reporting,Operational Process Controls,OECD,OECD-1.5,Accountability,high,high,high
+AICC-24,AI incident management and reporting,Operational Process Controls,ISO 42001,A.3.3,Reporting of concerns,high,high,high
+AICC-24,AI incident management and reporting,Operational Process Controls,ISO 42001,A.8.3,External reporting,high,high,high
+AICC-24,AI incident management and reporting,Operational Process Controls,ISO 42001,A.8.4,Communication of incidents,high,high,high
+AICC-24,AI incident management and reporting,Operational Process Controls,EU AI Act,Art.73,Reporting of serious incidents,high,high,high
+AICC-25,AI literacy and responsible-use training,Governance & Oversight Controls,MIT Risk Domains,MIT-5.1,Overreliance and unsafe use,high,high,high
+AICC-25,AI literacy and responsible-use training,Governance & Oversight Controls,OWASP Agentic,ASI09,Human-Agent Trust Exploitation,high,high,high
+AICC-25,AI literacy and responsible-use training,Governance & Oversight Controls,OECD,OECD-1.1,"Inclusive growth, sustainable development and well-being",high,high,high
+AICC-25,AI literacy and responsible-use training,Governance & Oversight Controls,OECD,OECD-1.5,Accountability,high,high,high
+AICC-25,AI literacy and responsible-use training,Governance & Oversight Controls,ISO 42001,A.4.6,Human resources,high,high,high
+AICC-25,AI literacy and responsible-use training,Governance & Oversight Controls,ISO 42001,A.9.2,Processes for responsible use of AI systems,high,high,high
+AICC-25,AI literacy and responsible-use training,Governance & Oversight Controls,EU AI Act,Art.4,AI literacy,high,high,high
+AICC-26,Environmental and compute footprint management,Operational Process Controls,MIT Risk Domains,MIT-6.6,Environmental harm,medium,low,low
+AICC-26,Environmental and compute footprint management,Operational Process Controls,OECD,OECD-1.1,"Inclusive growth, sustainable development and well-being",medium,low,low
+AICC-26,Environmental and compute footprint management,Operational Process Controls,ISO 42001,A.4.5,System and computing resources,medium,low,low
+AICC-26,Environmental and compute footprint management,Operational Process Controls,ISO 42001,A.5.5,Assessing societal impacts of AI systems,medium,low,low
+AICC-26,Environmental and compute footprint management,Operational Process Controls,EU AI Act,Art.53,Obligations for providers of general-purpose AI models,medium,low,low
+AICC-27,Dangerous capability and misuse safeguards,Technical & Security Controls,MIT Risk Domains,MIT-4.1,"Disinformation, surveillance and influence at scale",medium,high,medium
+AICC-27,Dangerous capability and misuse safeguards,Technical & Security Controls,MIT Risk Domains,MIT-4.2,"Cyberattacks, weapon development and mass harm",medium,high,medium
+AICC-27,Dangerous capability and misuse safeguards,Technical & Security Controls,MIT Risk Domains,MIT-4.3,"Fraud, scams and targeted manipulation",medium,high,medium
+AICC-27,Dangerous capability and misuse safeguards,Technical & Security Controls,MIT Risk Domains,MIT-7.2,AI possessing dangerous capabilities,medium,high,medium
+AICC-27,Dangerous capability and misuse safeguards,Technical & Security Controls,OWASP Agentic,ASI10,Rogue Agents,medium,high,medium
+AICC-27,Dangerous capability and misuse safeguards,Technical & Security Controls,OECD,OECD-1.2,"Respect for the rule of law, human rights and democratic values, including fairness and privacy",medium,high,medium
+AICC-27,Dangerous capability and misuse safeguards,Technical & Security Controls,OECD,OECD-1.4,"Robustness, security and safety",medium,high,medium
+AICC-27,Dangerous capability and misuse safeguards,Technical & Security Controls,ISO 42001,A.5.5,Assessing societal impacts of AI systems,medium,high,medium
+AICC-27,Dangerous capability and misuse safeguards,Technical & Security Controls,ISO 42001,A.9.4,Intended use of the AI system,medium,high,medium
+AICC-27,Dangerous capability and misuse safeguards,Technical & Security Controls,EU AI Act,Art.5,Prohibited AI practices,medium,high,medium
+AICC-27,Dangerous capability and misuse safeguards,Technical & Security Controls,EU AI Act,Art.55,Obligations for GPAI models with systemic risk,medium,high,medium
+AICC-28,Customer and downstream deployer information,Transparency & Accountability Controls,MIT Risk Domains,MIT-5.1,Overreliance and unsafe use,high,medium,high
+AICC-28,Customer and downstream deployer information,Transparency & Accountability Controls,OECD,OECD-1.3,Transparency and explainability,high,medium,high
+AICC-28,Customer and downstream deployer information,Transparency & Accountability Controls,OECD,OECD-1.5,Accountability,high,medium,high
+AICC-28,Customer and downstream deployer information,Transparency & Accountability Controls,ISO 42001,A.8.2,System documentation and information for users,high,medium,high
+AICC-28,Customer and downstream deployer information,Transparency & Accountability Controls,ISO 42001,A.10.4,Customers,high,medium,high
+AICC-28,Customer and downstream deployer information,Transparency & Accountability Controls,EU AI Act,Art.13,Transparency and provision of information to deployers,high,medium,high
+AICC-28,Customer and downstream deployer information,Transparency & Accountability Controls,EU AI Act,Art.25,Responsibilities along the AI value chain,high,medium,high

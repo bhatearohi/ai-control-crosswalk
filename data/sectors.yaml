@@ -1,0 +1,40 @@
+# Sector profiles. These are orientation notes, not legal advice - confirm
+# applicability with the relevant regulator or counsel.
+sectors:
+  - id: manufacturing
+    name: Manufacturing
+    example_use_cases:
+      - Predictive maintenance on production lines
+      - Computer-vision quality inspection
+      - AI in connected products and robotics
+      - GenAI copilots for engineering and R&D documentation
+    regulatory_context:
+      - "EU AI Act: AI as a safety component of products under Annex I legislation (e.g. machinery) can be high-risk via Art. 6(1)"
+      - "EU AI Act Annex III: safety components in critical infrastructure management"
+      - "EU Cyber Resilience Act for products with digital elements"
+      - "EU Machinery Regulation (EU) 2023/1230"
+    key_concerns: [Physical safety, Robustness, OT/IT security, IP leakage, Supply chain]
+  - id: finance
+    name: Financial Services
+    example_use_cases:
+      - Credit scoring and affordability
+      - Fraud and AML transaction monitoring
+      - Customer-service chatbots and advisers
+      - Insurance pricing and underwriting
+    regulatory_context:
+      - "EU AI Act Annex III: creditworthiness / credit scoring and life & health insurance risk pricing are high-risk"
+      - "EU DORA - ICT risk and third-party risk management"
+      - "UK: PRA SS1/23 model risk management principles; FCA Consumer Duty"
+    key_concerns: [Fairness, Explainability, Model risk, Operational resilience, Third-party concentration]
+  - id: healthcare
+    name: Healthcare & Life Sciences
+    example_use_cases:
+      - Diagnostic imaging and clinical decision support
+      - Patient triage and scheduling
+      - Clinical documentation and ambient scribing
+      - Drug discovery and trial analytics
+    regulatory_context:
+      - "EU AI Act: AI medical devices under MDR/IVDR can be high-risk via Art. 6(1) and Annex I"
+      - "EU AI Act Annex III: emergency triage and access to essential public services"
+      - "UK: MHRA software and AI as a medical device guidance; NHS DTAC"
+    key_concerns: [Patient safety, Special-category data, Clinical validation, Bias across populations, Human oversight]

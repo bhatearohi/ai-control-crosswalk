@@ -1,0 +1,14 @@
+id: MITM
+name: MIT AI Risk Mitigation Taxonomy - Top-level Categories
+short: MIT Mitigations
+kind: mitigation
+version: "Draft taxonomy (4 categories, 23 subcategories) - top level used here"
+source_url: https://airisk.mit.edu/blog/mapping-ai-risk-mitigations
+licence_note: >-
+  Category names from the MIT AI Risk Mitigation Taxonomy (draft). Only the four
+  top-level categories are used to classify the unified controls in this project.
+items:
+  - {id: MITM-GOV, title: "Governance & Oversight Controls", description: "Structures, policies and accountability that keep people in control of AI decisions and risk."}
+  - {id: MITM-TECH, title: "Technical & Security Controls", description: "Built-in technical safeguards that make AI systems safe, secure and aligned."}
+  - {id: MITM-OPS, title: "Operational Process Controls", description: "Processes that guide how AI is tested, deployed, monitored and managed day to day."}
+  - {id: MITM-TRANS, title: "Transparency & Accountability Controls", description: "Ways of sharing and checking information about AI systems to enable external scrutiny."}

@@ -1,0 +1,505 @@
+# Unified AI Control Crosswalk
+# Each control is a single, implementable requirement mapped to every framework it
+# helps satisfy. Mappings are analyst judgement ("supports / contributes to"), not
+# official equivalences published by any of the framework owners.
+#
+# maps keys must match framework ids in data/frameworks/*.yaml
+# sector priority: high | medium | low
+version: "1.0.0"
+controls:
+  - id: AICC-01
+    title: AI governance policy and accountability
+    category: MITM-GOV
+    objective: Establish an approved AI policy, owned at senior level, that sets the organisation's risk appetite and rules for developing, buying and using AI.
+    guidance:
+      - Board- or ExCo-approved AI policy aligned with information security, privacy and quality policies
+      - Named accountable executive and an AI governance forum with terms of reference
+      - Annual policy review, plus review triggered by major regulatory or technology change
+    evidence: [Approved AI policy with version history, Governance forum minutes, Policy review log]
+    maps:
+      MIT: [MIT-6.5]
+      OECD: [OECD-1.5]
+      ISO42001: [A.2.2, A.2.3, A.2.4, A.3.2]
+      EUAIA: [Art.17]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+
+  - id: AICC-02
+    title: AI roles, responsibilities and concern reporting
+    category: MITM-GOV
+    objective: Define who owns each AI system and its risks, and give staff a safe route to raise concerns about AI behaviour.
+    guidance:
+      - RACI covering system owner, risk owner, model developer, human overseer and DPO
+      - Concern-reporting channel (can reuse whistleblowing or speak-up process) that covers AI
+      - Competence requirements for people assigned human-oversight duties
+    evidence: [RACI matrix, Concern-reporting procedure, Oversight role assignments]
+    maps:
+      MIT: [MIT-6.5]
+      OECD: [OECD-1.5]
+      ISO42001: [A.3.2, A.3.3]
+      EUAIA: [Art.17, Art.26]
+    sectors: {manufacturing: medium, finance: high, healthcare: high}
+
+  - id: AICC-03
+    title: AI system inventory and use-case register
+    category: MITM-GOV
+    objective: Maintain a complete inventory of AI systems, models and use cases, including shadow and third-party AI, with owners and intended purpose.
+    guidance:
+      - Single register capturing purpose, owner, data used, model/vendor, users and deployment status
+      - Discovery routines for shadow AI (SaaS AI features, browser extensions, R&D prototypes)
+      - Intended-use statement and out-of-scope uses recorded for each system
+    evidence: [AI inventory export, Shadow-AI discovery report, Intended-use statements]
+    maps:
+      MIT: [MIT-6.5, MIT-5.1]
+      OECD: [OECD-1.5]
+      ISO42001: [A.4.2, A.9.4]
+      EUAIA: [Art.6, Art.26]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+    sector_notes:
+      manufacturing: Include AI embedded in products and OT, not just enterprise IT.
+
+  - id: AICC-04
+    title: Risk classification and prohibited-use screening
+    category: MITM-GOV
+    objective: Screen every AI use case against prohibited practices and classify its regulatory risk tier before build or purchase.
+    guidance:
+      - Intake questionnaire screening for prohibited practices and Annex I / Annex III high-risk triggers
+      - Record the classification rationale and re-screen on material change
+      - Escalate borderline cases to legal and the AI governance forum
+    evidence: [Completed screening questionnaires, Classification decisions log]
+    maps:
+      MIT: [MIT-4.1, MIT-4.3, MIT-5.2, MIT-6.5]
+      OECD: [OECD-1.2]
+      ISO42001: [A.5.2, A.9.4]
+      EUAIA: [Art.5, Art.6]
+    sectors: {manufacturing: medium, finance: high, healthcare: high}
+    sector_notes:
+      finance: Credit scoring and life/health insurance pricing are listed high-risk use cases.
+      healthcare: AI medical devices and emergency triage usually land in the high-risk tier.
+
+  - id: AICC-05
+    title: AI risk management lifecycle
+    category: MITM-GOV
+    objective: Identify, assess, treat and review AI risks continuously across the lifecycle, integrated with the enterprise risk register.
+    guidance:
+      - AI risk assessment methodology using a shared taxonomy (e.g. MIT Risk Repository domains)
+      - AI risks recorded in the enterprise risk register with owners, treatment plans and target dates
+      - Periodic reassessment and residual-risk acceptance at the right authority level
+    evidence: [AI risk methodology, Risk register entries, Risk acceptance records]
+    maps:
+      MIT: [MIT-6.5, MIT-7.3]
+      OECD: [OECD-1.4, OECD-1.5]
+      ISO42001: [A.5.2, A.6.1.2]
+      EUAIA: [Art.9]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+    sector_notes:
+      finance: Align with model risk management (e.g. PRA SS1/23) so AI models sit in the model inventory.
+
+  - id: AICC-06
+    title: AI impact assessment on individuals and society
+    category: MITM-GOV
+    objective: Assess and document the impact of AI systems on individuals, groups, fundamental rights and society before deployment.
+    guidance:
+      - Combined impact assessment template (fundamental rights, DPIA, equality, societal effects)
+      - Involve affected stakeholders or their representatives where feasible
+      - Keep assessments with the system record and refresh on material change
+    evidence: [Completed impact assessments, Stakeholder consultation notes]
+    maps:
+      MIT: [MIT-1.1, MIT-1.3, MIT-6.2, MIT-6.6]
+      OECD: [OECD-1.1, OECD-1.2]
+      ISO42001: [A.5.2, A.5.3, A.5.4, A.5.5]
+      EUAIA: [Art.27]
+    sectors: {manufacturing: medium, finance: high, healthcare: high}
+
+  - id: AICC-07
+    title: Training and evaluation data governance and quality
+    category: MITM-OPS
+    objective: Ensure data used to build, fine-tune and evaluate AI is relevant, representative, accurate and fit for purpose.
+    guidance:
+      - Data quality requirements and acceptance criteria per data set
+      - Examination of data sets for possible bias and gaps in representation
+      - Documented data preparation steps (labelling, cleaning, enrichment)
+    evidence: [Data sheets / data cards, Data quality reports, Bias examination results]
+    maps:
+      MIT: [MIT-1.1, MIT-1.3, MIT-7.3]
+      OWASP-LLM: [LLM05]
+      OECD: [OECD-1.2, OECD-1.4]
+      ISO42001: [A.7.2, A.7.4, A.7.6]
+      EUAIA: [Art.10]
+    sectors: {manufacturing: medium, finance: high, healthcare: high}
+    sector_notes:
+      healthcare: Check representativeness across patient populations, devices and sites.
+
+  - id: AICC-08
+    title: Data provenance and poisoning defences
+    category: MITM-TECH
+    objective: Track where data, embeddings and memory content come from and protect them against tampering.
+    guidance:
+      - Provenance records for training, fine-tuning and RAG source data
+      - Integrity checks and access control on data pipelines and vector stores
+      - Validation of content written to agent memory; ability to roll back poisoned data
+    evidence: [Provenance / lineage records, Pipeline access reviews, Vector store integrity checks]
+    maps:
+      MIT: [MIT-2.2, MIT-7.3]
+      OWASP-LLM: [LLM05, LLM09]
+      OWASP-ASI: [ASI06]
+      OECD: [OECD-1.4]
+      ISO42001: [A.7.3, A.7.5]
+      EUAIA: [Art.10, Art.15]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+
+  - id: AICC-09
+    title: Privacy and sensitive data protection in AI
+    category: MITM-TECH
+    objective: Prevent AI systems from collecting, exposing or inferring personal, confidential or proprietary data inappropriately.
+    guidance:
+      - Data minimisation and classification-aware rules for what may enter prompts, training and RAG
+      - Output filtering / DLP for sensitive data; tenant and permission-aware retrieval
+      - Keep secrets and sensitive rules out of system prompts and hidden context
+    evidence: [DPIA, DLP rule set, Retrieval permission tests, Prompt hygiene review]
+    maps:
+      MIT: [MIT-2.1]
+      OWASP-LLM: [LLM02, LLM08]
+      OECD: [OECD-1.2]
+      ISO42001: [A.4.3, A.7.2]
+      EUAIA: [Art.10]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+    sector_notes:
+      manufacturing: Focus on IP and R&D design data leaking into third-party models.
+      healthcare: Special-category health data needs a lawful basis and strict minimisation.
+
+  - id: AICC-10
+    title: Bias and fairness testing
+    category: MITM-OPS
+    objective: Test AI outcomes for unfair differences across groups before release and periodically in production.
+    guidance:
+      - Define protected and relevant groups and fairness metrics per use case
+      - Pre-release fairness testing with documented thresholds and sign-off
+      - Re-test after retraining and when population or context drifts
+    evidence: [Fairness test reports, Threshold sign-offs, Re-test schedule]
+    maps:
+      MIT: [MIT-1.1, MIT-1.3]
+      OECD: [OECD-1.2]
+      ISO42001: [A.5.4, A.6.2.4]
+      EUAIA: [Art.10, Art.15]
+    sectors: {manufacturing: low, finance: high, healthcare: high}
+
+  - id: AICC-11
+    title: Verification, validation and adversarial testing
+    category: MITM-OPS
+    objective: Verify AI meets its requirements and red-team it against misuse, jailbreaks and failure modes before release.
+    guidance:
+      - Test plan covering accuracy, robustness, safety and security acceptance criteria
+      - Red-team exercises using OWASP LLM and Agentic Top 10 scenarios
+      - Re-run regression suites for every model, prompt or tool change
+    evidence: [V&V reports, Red-team findings and remediation, Regression results]
+    maps:
+      MIT: [MIT-2.2, MIT-3.1, MIT-4.2, MIT-7.3]
+      OWASP-LLM: [LLM01, LLM07, LLM10]
+      OWASP-ASI: [ASI01]
+      OECD: [OECD-1.4]
+      ISO42001: [A.6.2.4]
+      EUAIA: [Art.15, Art.55]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+    sector_notes:
+      healthcare: Clinical validation should be prospective where outputs inform care decisions.
+
+  - id: AICC-12
+    title: Prompt injection and hidden context protection
+    category: MITM-TECH
+    objective: Treat all external and retrieved content as untrusted and stop it from overriding system instructions or extracting hidden context.
+    guidance:
+      - Separate and label trusted instructions from untrusted content (documents, web, email, images)
+      - Input screening for direct, indirect and cross-modal injection
+      - Constrain agent objectives so retrieved content cannot change goals without approval
+    evidence: [Input-handling design, Injection test cases, Guardrail configuration]
+    maps:
+      MIT: [MIT-2.2]
+      OWASP-LLM: [LLM01, LLM08]
+      OWASP-ASI: [ASI01, ASI06]
+      OECD: [OECD-1.4]
+      ISO42001: [A.6.1.3, A.6.2.2]
+      EUAIA: [Art.15]
+    sectors: {manufacturing: medium, finance: high, healthcare: high}
+
+  - id: AICC-13
+    title: Output validation and content safeguards
+    category: MITM-TECH
+    objective: Validate and constrain model output before it reaches users or downstream systems, including code and commands.
+    guidance:
+      - Encode and validate output before passing to browsers, databases, shells or APIs
+      - Sandbox any execution of model-generated code
+      - Content safety filters and grounding / citation checks for factual claims
+    evidence: [Output validation design, Sandbox configuration, Content filter test results]
+    maps:
+      MIT: [MIT-1.2, MIT-3.1, MIT-2.2]
+      OWASP-LLM: [LLM07, LLM10]
+      OWASP-ASI: [ASI05]
+      OECD: [OECD-1.4]
+      ISO42001: [A.6.2.2]
+      EUAIA: [Art.15, Art.50]
+    sectors: {manufacturing: medium, finance: high, healthcare: high}
+
+  - id: AICC-14
+    title: Agent permissions and least agency
+    category: MITM-TECH
+    objective: Give AI agents only the tools, permissions and autonomy their task needs, with scoped identities and authenticated agent-to-agent communication.
+    guidance:
+      - Tool allow-lists and per-tool scopes; no broad standing credentials
+      - Distinct, short-lived non-human identities for agents; no inherited user super-privileges
+      - Authenticate and integrity-protect inter-agent messages; limit delegation depth
+    evidence: [Agent permission matrix, Identity configuration, Inter-agent auth design]
+    maps:
+      MIT: [MIT-5.2, MIT-7.1, MIT-7.6]
+      OWASP-LLM: [LLM03]
+      OWASP-ASI: [ASI02, ASI03, ASI07]
+      OECD: [OECD-1.4, OECD-1.5]
+      ISO42001: [A.6.1.3, A.9.2]
+      EUAIA: [Art.14, Art.15]
+    sectors: {manufacturing: high, finance: high, healthcare: medium}
+    sector_notes:
+      manufacturing: Agents that can act on OT or production systems need hard safety interlocks.
+
+  - id: AICC-15
+    title: Human oversight and intervention
+    category: MITM-GOV
+    objective: Ensure competent people can understand, override, stop or reverse AI decisions, proportionate to risk.
+    guidance:
+      - Define where human-in-the-loop, on-the-loop or post-hoc review applies per use case
+      - Approval gates for high-impact agent actions; stop / kill switch tested regularly
+      - Design approvals to resist rubber-stamping and manipulation (clear context, no dark patterns)
+    evidence: [Oversight design per system, Approval logs, Kill-switch test records]
+    maps:
+      MIT: [MIT-5.1, MIT-5.2, MIT-7.1]
+      OWASP-ASI: [ASI09, ASI10]
+      OECD: [OECD-1.2, OECD-1.4, OECD-1.5]
+      ISO42001: [A.9.2, A.9.3]
+      EUAIA: [Art.14, Art.26]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+    sector_notes:
+      healthcare: Clinician remains the decision-maker; guard against automation bias.
+
+  - id: AICC-16
+    title: Transparency to users and AI disclosure
+    category: MITM-TRANS
+    objective: Tell people when they are interacting with AI or seeing AI-generated content, and what the system can and cannot do.
+    guidance:
+      - Clear AI-interaction notices and labelling or marking of synthetic content
+      - User-facing documentation of capabilities, limitations and appropriate use
+      - Information for affected people on how to query or contest outcomes
+    evidence: [User notices, Content marking approach, User documentation]
+    maps:
+      MIT: [MIT-3.1, MIT-3.2, MIT-5.1, MIT-7.4]
+      OECD: [OECD-1.3]
+      ISO42001: [A.8.2, A.8.5]
+      EUAIA: [Art.13, Art.50]
+    sectors: {manufacturing: medium, finance: high, healthcare: high}
+
+  - id: AICC-17
+    title: Explainability and technical documentation
+    category: MITM-TRANS
+    objective: Document how AI systems are designed, built and behave so that outcomes can be explained and compliance demonstrated.
+    guidance:
+      - Model and system cards covering purpose, data, design choices, performance and limits
+      - Explanation methods appropriate to the audience (regulator, user, affected person)
+      - Keep documentation current with each material change
+    evidence: [Model / system cards, Design decision records, Explanation samples]
+    maps:
+      MIT: [MIT-7.4]
+      OECD: [OECD-1.3, OECD-1.5]
+      ISO42001: [A.6.2.3, A.6.2.7]
+      EUAIA: [Art.11, Art.13, Art.53]
+    sectors: {manufacturing: medium, finance: high, healthcare: high}
+    sector_notes:
+      finance: Adverse credit decisions need explanations customers can understand.
+
+  - id: AICC-18
+    title: Event logging and traceability
+    category: MITM-TRANS
+    objective: Log AI inputs, outputs, decisions, tool calls and agent actions so behaviour can be reconstructed and investigated.
+    guidance:
+      - Define what is logged per lifecycle phase, with retention aligned to legal requirements
+      - Correlate agent plans, tool calls and approvals in one trace
+      - Protect logs from tampering and redact sensitive data where needed
+    evidence: [Logging standard, Sample traces, Log retention configuration]
+    maps:
+      MIT: [MIT-7.4, MIT-2.2]
+      OWASP-ASI: [ASI10]
+      OECD: [OECD-1.5]
+      ISO42001: [A.6.2.8]
+      EUAIA: [Art.12, Art.26]
+    sectors: {manufacturing: medium, finance: high, healthcare: high}
+
+  - id: AICC-19
+    title: AI supply chain and third-party model assurance
+    category: MITM-GOV
+    objective: Assess and govern third-party models, data sets, tools, plugins and AI vendors, with clear allocation of responsibilities.
+    guidance:
+      - AI-specific vendor due diligence (model provenance, training data, security testing, data use terms)
+      - AI bill of materials for models, data sets and agent tools / MCP servers
+      - Contractual allocation of provider / deployer responsibilities and incident cooperation
+    evidence: [AI vendor questionnaires, AIBOM, Contract clauses, Supplier review records]
+    maps:
+      MIT: [MIT-2.2, MIT-6.5]
+      OWASP-LLM: [LLM04]
+      OWASP-ASI: [ASI04]
+      OECD: [OECD-1.5]
+      ISO42001: [A.4.4, A.10.2, A.10.3]
+      EUAIA: [Art.25, Art.53]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+    sector_notes:
+      finance: Treat critical AI providers as ICT third-party risk (e.g. DORA register).
+
+  - id: AICC-20
+    title: Model and AI infrastructure security
+    category: MITM-TECH
+    objective: Protect models, weights, vector stores, agent runtimes and compute from unauthorised access, theft and tampering.
+    guidance:
+      - Harden and segment AI infrastructure; secure model registries and artefact signing
+      - Access control and monitoring on vector databases and embedding pipelines
+      - Run agent code execution in isolated, least-privilege sandboxes
+    evidence: [Architecture and threat model, Access reviews, Vulnerability scan results]
+    maps:
+      MIT: [MIT-2.2]
+      OWASP-LLM: [LLM04, LLM09]
+      OWASP-ASI: [ASI03, ASI05]
+      OECD: [OECD-1.4]
+      ISO42001: [A.4.5, A.6.2.5]
+      EUAIA: [Art.15]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+
+  - id: AICC-21
+    title: Resource abuse and cascading failure protection
+    category: MITM-TECH
+    objective: Prevent uncontrolled consumption, denial of service, model extraction and runaway agent loops.
+    guidance:
+      - Rate limits, quotas and budget alerts per user, app and agent
+      - Loop, recursion and timeout limits for agents; circuit breakers between agents
+      - Monitor for extraction patterns and anomalous usage
+    evidence: [Quota configuration, Cost and usage dashboards, Circuit-breaker tests]
+    maps:
+      MIT: [MIT-2.2, MIT-6.6, MIT-7.6]
+      OWASP-LLM: [LLM06]
+      OWASP-ASI: [ASI08]
+      OECD: [OECD-1.4]
+      ISO42001: [A.4.5, A.6.2.6]
+      EUAIA: [Art.15]
+    sectors: {manufacturing: medium, finance: high, healthcare: medium}
+
+  - id: AICC-22
+    title: Deployment gates and change management
+    category: MITM-OPS
+    objective: Release AI only through defined readiness gates, and control changes to models, prompts, tools and data.
+    guidance:
+      - Go-live checklist linking risk assessment, testing, documentation and oversight sign-off
+      - Version control for models, prompts, agent configurations and guardrails
+      - Rollback plan and staged rollout for material changes
+    evidence: [Release checklists, Change records, Rollback test evidence]
+    maps:
+      MIT: [MIT-7.3]
+      OECD: [OECD-1.4]
+      ISO42001: [A.6.1.3, A.6.2.5]
+      EUAIA: [Art.9, Art.17]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+
+  - id: AICC-23
+    title: Post-deployment monitoring and drift management
+    category: MITM-OPS
+    objective: Monitor AI performance, safety, fairness and behaviour in production and act on drift or emerging issues.
+    guidance:
+      - KPIs and thresholds for accuracy, hallucination, fairness and safety events
+      - Behavioural monitoring for agents acting outside expected patterns
+      - Feedback loop from users and incidents into the risk register
+    evidence: [Monitoring dashboards, Threshold breach records, Post-market monitoring plan]
+    maps:
+      MIT: [MIT-3.1, MIT-7.3, MIT-7.6]
+      OWASP-LLM: [LLM07]
+      OWASP-ASI: [ASI08, ASI10]
+      OECD: [OECD-1.4]
+      ISO42001: [A.6.2.6]
+      EUAIA: [Art.26, Art.72]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+
+  - id: AICC-24
+    title: AI incident management and reporting
+    category: MITM-OPS
+    objective: Detect, respond to, learn from and report AI incidents, including regulatory notification where required.
+    guidance:
+      - Extend incident taxonomy and playbooks to AI-specific harms and agent failures
+      - Criteria and timelines for internal escalation and external / regulatory reporting
+      - Post-incident reviews feeding back into controls and testing
+    evidence: [AI incident playbook, Incident records, Regulator notifications, Lessons-learned reports]
+    maps:
+      MIT: [MIT-6.5, MIT-7.3]
+      OWASP-ASI: [ASI08, ASI10]
+      OECD: [OECD-1.5]
+      ISO42001: [A.3.3, A.8.3, A.8.4]
+      EUAIA: [Art.73]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+
+  - id: AICC-25
+    title: AI literacy and responsible-use training
+    category: MITM-GOV
+    objective: Give staff the knowledge to use, oversee and challenge AI appropriately for their role.
+    guidance:
+      - Role-based AI literacy curriculum (all staff, developers, overseers, executives)
+      - Training on over-reliance, verification of outputs and recognising manipulation by agents
+      - Track completion and refresh as tools and rules change
+    evidence: [Training curriculum, Completion records, Awareness campaign materials]
+    maps:
+      MIT: [MIT-5.1]
+      OWASP-ASI: [ASI09]
+      OECD: [OECD-1.1, OECD-1.5]
+      ISO42001: [A.4.6, A.9.2]
+      EUAIA: [Art.4]
+    sectors: {manufacturing: high, finance: high, healthcare: high}
+
+  - id: AICC-26
+    title: Environmental and compute footprint management
+    category: MITM-OPS
+    objective: Measure and manage the energy and resource footprint of AI development and use.
+    guidance:
+      - Track compute and energy use for training and inference where feasible
+      - Prefer right-sized models; include footprint in build-vs-buy decisions
+      - Report footprint alongside other sustainability metrics
+    evidence: [Compute / energy reports, Model selection rationale]
+    maps:
+      MIT: [MIT-6.6]
+      OECD: [OECD-1.1]
+      ISO42001: [A.4.5, A.5.5]
+      EUAIA: [Art.53]
+    sectors: {manufacturing: medium, finance: low, healthcare: low}
+
+  - id: AICC-27
+    title: Dangerous capability and misuse safeguards
+    category: MITM-TECH
+    objective: Prevent AI capabilities from being used for fraud, manipulation, cyber offence or other serious misuse.
+    guidance:
+      - Usage policies and acceptable-use enforcement for AI tools and APIs
+      - Capability evaluations and abuse monitoring for high-impact models and agents
+      - Controls against deepfake and impersonation fraud in customer channels
+    evidence: [Acceptable-use policy, Capability evaluation results, Abuse monitoring alerts]
+    maps:
+      MIT: [MIT-4.1, MIT-4.2, MIT-4.3, MIT-7.2]
+      OWASP-ASI: [ASI10]
+      OECD: [OECD-1.2, OECD-1.4]
+      ISO42001: [A.5.5, A.9.4]
+      EUAIA: [Art.5, Art.55]
+    sectors: {manufacturing: medium, finance: high, healthcare: medium}
+    sector_notes:
+      finance: Voice and video deepfakes are a live payment-fraud vector.
+
+  - id: AICC-28
+    title: Customer and downstream deployer information
+    category: MITM-TRANS
+    objective: Give customers and downstream deployers what they need to use the AI system safely and meet their own obligations.
+    guidance:
+      - Instructions for use, known limitations and required oversight measures
+      - Channel for customers to report issues and receive updates
+      - Clear statement of which party holds which obligations
+    evidence: [Instructions for use, Customer issue log, Responsibility matrix]
+    maps:
+      MIT: [MIT-5.1]
+      OECD: [OECD-1.3, OECD-1.5]
+      ISO42001: [A.8.2, A.10.4]
+      EUAIA: [Art.13, Art.25]
+    sectors: {manufacturing: high, finance: medium, healthcare: high}

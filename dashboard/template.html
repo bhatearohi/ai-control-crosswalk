@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Control Crosswalk</title>
+<meta name="description" content="Unified AI controls mapped across the MIT AI Risk Repository, OWASP GenAI, OECD AI Principles, ISO/IEC 42001 and the EU AI Act.">
+<style>
+:root {
+  --bg: #f6f7f9; --surface: #ffffff; --surface-2: #f0f2f5; --border: #dde1e7;
+  --text: #17202b; --muted: #5b6676; --accent: #1f5fbf; --accent-soft: #e6effb;
+  --danger: #b4232c; --danger-soft: #fbe9ea; --ok: #1d7a46;
+  --hi: #b4232c; --med: #b86e00; --lo: #5b6676;
+  --fw-MIT: #6d4bd8; --fw-OWASP-LLM: #c2410c; --fw-OWASP-ASI: #be185d;
+  --fw-OECD: #0f766e; --fw-ISO42001: #1d4ed8; --fw-EUAIA: #a16207;
+  --heat-0: #fbe9ea; --heat-1: #dbe8fb; --heat-2: #a9c6f2; --heat-3: #6d9ee6; --heat-4: #2f6fd1;
+  --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+  --radius: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141b; --surface: #161d27; --surface-2: #1d2633; --border: #2b3645;
+    --text: #e6ebf2; --muted: #98a4b5; --accent: #6ea8ff; --accent-soft: #1b2a42;
+    --danger: #ff7b84; --danger-soft: #3a1d22; --ok: #4ccf8a;
+    --hi: #ff7b84; --med: #f0b35a; --lo: #98a4b5;
+    --fw-MIT: #a78bfa; --fw-OWASP-LLM: #fb923c; --fw-OWASP-ASI: #f472b6;
+    --fw-OECD: #2dd4bf; --fw-ISO42001: #60a5fa; --fw-EUAIA: #facc15;
+    --heat-0: #3a1d22; --heat-1: #1c2a3f; --heat-2: #24406a; --heat-3: #2f5d9e; --heat-4: #4d86dc;
+    --shadow: none; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141b; --surface: #161d27; --surface-2: #1d2633; --border: #2b3645;
+  --text: #e6ebf2; --muted: #98a4b5; --accent: #6ea8ff; --accent-soft: #1b2a42;
+  --danger: #ff7b84; --danger-soft: #3a1d22; --ok: #4ccf8a;
+  --hi: #ff7b84; --med: #f0b35a; --lo: #98a4b5;
+  --fw-MIT: #a78bfa; --fw-OWASP-LLM: #fb923c; --fw-OWASP-ASI: #f472b6;
+  --fw-OECD: #2dd4bf; --fw-ISO42001: #60a5fa; --fw-EUAIA: #facc15;
+  --heat-0: #3a1d22; --heat-1: #1c2a3f; --heat-2: #24406a; --heat-3: #2f5d9e; --heat-4: #4d86dc;
+  --shadow: none; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--accent); }
+button, select, input { font: inherit; color: inherit; }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 0 16px; }
+
+header.top { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
+.top-row { display: flex; align-items: center; gap: 16px; padding: 14px 0 8px; flex-wrap: wrap; }
+.brand h1 { font-size: 18px; margin: 0; letter-spacing: -.01em; }
+.brand p { margin: 0; color: var(--muted); font-size: 12.5px; }
+.spacer { flex: 1; }
+.icon-btn { background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+nav.tabs { display: flex; gap: 2px; overflow-x: auto; }
+nav.tabs button { background: none; border: 0; border-bottom: 2px solid transparent; padding: 8px 12px; cursor: pointer; color: var(--muted); white-space: nowrap; font-weight: 500; }
+nav.tabs button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+
+.filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; padding: 14px 0 4px; }
+.filters label { display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+.filters select, .filters input { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 7px 9px; min-width: 150px; text-transform: none; letter-spacing: 0; font-weight: 400; font-size: 13.5px; }
+.filters input[type=search] { min-width: 220px; }
+.filter-note { font-size: 12.5px; color: var(--muted); padding-bottom: 8px; }
+
+main { padding: 12px 0 48px; }
+section.view { display: none; }
+section.view.active { display: block; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; }
+.card h2 { font-size: 15px; margin: 0 0 4px; }
+.card .sub { color: var(--muted); font-size: 12.5px; margin: 0 0 12px; }
+.grid { display: grid; gap: 14px; }
+.kpis { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin-bottom: 14px; }
+.kpi .v { font-size: 28px; font-weight: 700; letter-spacing: -.02em; }
+.kpi .l { color: var(--muted); font-size: 12.5px; }
+.two { grid-template-columns: 1.3fr 1fr; }
+@media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
+
+.bar-row { display: grid; grid-template-columns: 120px 1fr 70px; gap: 10px; align-items: center; padding: 6px 0; cursor: pointer; }
+.bar-row:hover .bar-label { color: var(--accent); }
+.bar-track { background: var(--surface-2); border-radius: 6px; height: 14px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 6px; transition: width .3s ease; }
+.bar-val { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 12.5px; }
+.bar-label { font-weight: 600; font-size: 13px; }
+
+.fw-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+.fw-cards { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.fw-card { border-left: 4px solid var(--c); }
+.fw-card h3 { margin: 0; font-size: 14px; }
+.fw-card .meta { color: var(--muted); font-size: 12px; margin: 4px 0 8px; }
+
+.table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); max-height: 72vh; }
+table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 13px; }
+th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+thead th { position: sticky; top: 0; background: var(--surface-2); z-index: 2; font-size: 12px; white-space: nowrap; }
+tbody tr { cursor: pointer; }
+tbody tr:hover td { background: var(--accent-soft); }
+td.ctrl { min-width: 240px; position: sticky; left: 0; background: var(--surface); z-index: 1; }
+thead th.ctrl { position: sticky; left: 0; z-index: 3; }
+td.ctrl .id { font-weight: 700; font-variant-numeric: tabular-nums; }
+td.ctrl .t { display: block; color: var(--text); }
+td.ctrl .cat { display: block; color: var(--muted); font-size: 11.5px; }
+.chip { display: inline-block; padding: 1px 7px; margin: 0 4px 4px 0; border-radius: 999px; font-size: 11.5px; font-weight: 600; background: color-mix(in srgb, var(--c) 14%, transparent); color: var(--c); border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); white-space: nowrap; }
+.chip.hit { outline: 2px solid var(--c); }
+.prio { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
+.prio.high { color: var(--hi); } .prio.medium { color: var(--med); } .prio.low { color: var(--lo); }
+.toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+.toolbar .count { color: var(--muted); font-size: 12.5px; }
+.btn { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer; font-size: 13px; }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.seg button { background: var(--surface); border: 0; padding: 6px 10px; cursor: pointer; font-size: 12.5px; }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+
+.heat td.cell { text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; min-width: 64px; }
+.heat td.domain { background: var(--surface-2); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); cursor: default; }
+.heat td.risk { min-width: 280px; }
+.heat .rid { font-weight: 700; margin-right: 6px; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+.legend span.sw { width: 22px; height: 12px; border-radius: 3px; display: inline-block; border: 1px solid var(--border); }
+
+.pivot-controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; margin-bottom: 14px; }
+.pivot-controls label { display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.pivot-controls select { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 7px 9px; min-width: 200px; max-width: 360px; text-transform: none; font-weight: 400; letter-spacing: 0; }
+.flow { position: relative; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 56px; }
+@media (max-width: 760px) { .flow { grid-template-columns: 1fr; gap: 14px; } .flow svg { display: none; } }
+.flow-col h3 { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 0 0 8px; }
+.node { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--c, var(--accent)); border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; position: relative; z-index: 1; font-size: 13px; cursor: pointer; }
+.node:hover { border-color: var(--c, var(--accent)); }
+.node b { font-variant-numeric: tabular-nums; }
+.node small { display: block; color: var(--muted); }
+.flow svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: visible; }
+.flow svg path { fill: none; stroke: var(--border); stroke-width: 2; }
+.empty { color: var(--muted); font-style: italic; padding: 12px 0; }
+
+.gap-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.gap-item { padding: 8px 0; border-bottom: 1px dashed var(--border); }
+.gap-item:last-child { border-bottom: 0; }
+.gap-item b { margin-right: 6px; }
+.ok-msg { color: var(--ok); font-weight: 600; }
+.callout { background: var(--accent-soft); border-radius: 8px; padding: 10px 12px; font-size: 13px; margin-bottom: 14px; }
+
+.drawer-backdrop { position: fixed; inset: 0; background: rgba(10,15,25,.4); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 40; }
+.drawer { position: fixed; top: 0; right: 0; height: 100%; width: min(560px, 100%); background: var(--surface); border-left: 1px solid var(--border); transform: translateX(100%); transition: transform .25s ease; z-index: 50; overflow-y: auto; padding: 20px; }
+.drawer.open { transform: none; }
+.drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+.drawer h2 { margin: 0 0 4px; font-size: 18px; }
+.drawer h4 { margin: 18px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.drawer ul { margin: 0; padding-left: 18px; }
+.drawer .map-group { margin-bottom: 10px; }
+.drawer .map-group .item { font-size: 13px; padding: 2px 0; }
+.drawer .close { position: absolute; top: 14px; right: 14px; }
+.sector-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.sector-pill { border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-size: 12.5px; }
+footer { color: var(--muted); font-size: 12px; padding: 24px 0; border-top: 1px solid var(--border); }
+@media (max-width: 600px) {
+  .filters select, .filters input, .filters input[type=search] { min-width: 0; width: 100%; }
+  .filters label { flex: 1 1 140px; }
+  .bar-row { grid-template-columns: 90px 1fr 56px; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <div class="brand">
+        <h1>AI Control Crosswalk</h1>
+        <p>MIT AI Risk Repository · OWASP GenAI (LLM + Agentic) · OECD AI Principles · ISO/IEC 42001 · EU AI Act</p>
+      </div>
+      <div class="spacer"></div>
+      <button class="icon-btn" id="themeBtn" title="Toggle light / dark">◐ Theme</button>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-view="overview" aria-selected="true">Overview</button>
+      <button role="tab" data-view="matrix" aria-selected="false">Crosswalk matrix</button>
+      <button role="tab" data-view="heatmap" aria-selected="false">Risk heatmap</button>
+      <button role="tab" data-view="pivot" aria-selected="false">Pivot explorer</button>
+      <button role="tab" data-view="gaps" aria-selected="false">Gaps</button>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="filters">
+    <label>Sector <select id="fSector"><option value="">All sectors</option></select></label>
+    <label>Min. sector priority <select id="fPrio">
+      <option value="low">Any</option><option value="medium">Medium +</option><option value="high" selected>High only</option>
+    </select></label>
+    <label>Mitigation category <select id="fCat"><option value="">All categories</option></select></label>
+    <label>Search <input type="search" id="fSearch" placeholder="e.g. prompt, Art.14, A.6.2.4, bias"></label>
+    <button class="btn" id="resetBtn">Reset</button>
+  </div>
+  <div class="filter-note" id="filterNote"></div>
+</div>
+
+<main class="wrap">
+  <!-- OVERVIEW -->
+  <section class="view active" id="view-overview">
+    <div class="grid kpis" id="kpis"></div>
+    <div class="grid two">
+      <div class="card">
+        <h2>Framework coverage</h2>
+        <p class="sub">Share of each framework's items addressed by at least one control in the current filter. Click a bar to see its gaps.</p>
+        <div id="covBars"></div>
+      </div>
+      <div class="card">
+        <h2>Controls by mitigation category</h2>
+        <p class="sub">MIT AI Risk Mitigation Taxonomy top-level categories.</p>
+        <div id="catBars"></div>
+        <h2 style="margin-top:18px">High-priority controls by sector</h2>
+        <p class="sub">Controls rated high priority for each sector.</p>
+        <div id="sectorBars"></div>
+      </div>
+    </div>
+    <h2 style="font-size:15px;margin:22px 0 10px">Frameworks in this crosswalk</h2>
+    <div class="grid fw-cards" id="fwCards"></div>
+    <div class="card" style="margin-top:14px" id="sectorCard"></div>
+  </section>
+
+  <!-- MATRIX -->
+  <section class="view" id="view-matrix">
+    <div class="toolbar">
+      <span class="seg" id="matrixMode">
+        <button data-mode="ids" aria-pressed="true">Item IDs</button>
+        <button data-mode="count" aria-pressed="false">Counts</button>
+      </span>
+      <span class="count" id="matrixCount"></span>
+      <span class="spacer"></span>
+      <button class="btn" id="csvBtn">⬇ Export filtered CSV</button>
+    </div>
+    <div class="table-wrap"><table id="matrix"></table></div>
+  </section>
+
+  <!-- HEATMAP -->
+  <section class="view" id="view-heatmap">
+    <div class="callout">Each MIT risk subdomain (rows) is linked to other frameworks through the unified controls that treat it. Cells show how many distinct items in that framework are reached. <b>Red rows</b> are risks no control in the current filter treats. Click a row to see the controls.</div>
+    <div class="toolbar"><div class="legend" id="heatLegend"></div></div>
+    <div class="table-wrap"><table class="heat" id="heat"></table></div>
+  </section>
+
+  <!-- PIVOT -->
+  <section class="view" id="view-pivot">
+    <div class="callout">Pick any requirement or risk and a target framework to see how they connect. For example, <i>"Which ISO 42001 controls help evidence EU AI Act Art. 14 human oversight?"</i></div>
+    <div class="pivot-controls">
+      <label>From framework <select id="pFromFw"></select></label>
+      <label>Item <select id="pFromItem"></select></label>
+      <label>To framework <select id="pToFw"></select></label>
+      <button class="btn" id="pSwap" title="Swap direction">⇄ Swap</button>
+    </div>
+    <div class="card"><div class="flow" id="flow"></div></div>
+  </section>
+
+  <!-- GAPS -->
+  <section class="view" id="view-gaps">
+    <div class="callout" id="gapIntro"></div>
+    <div class="grid gap-grid" id="gapGrid"></div>
+  </section>
+</main>
+
+<div class="wrap"><footer id="footer"></footer></div>
+
+<div class="drawer-backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <button class="btn close" id="drawerClose">✕ Close</button>
+  <div id="drawerBody"></div>
+</aside>
+
+<script>
+const EMBEDDED = /*__CROSSWALK_DATA__*/null;
+
+(async function () {
+  const DATA = EMBEDDED || await fetch("data.json").then(r => r.json());
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const RANK = { high: 3, medium: 2, low: 1 };
+  const FW = DATA.framework_order;
+  const fw = id => DATA.frameworks[id];
+  const color = id => `var(--fw-${id})`;
+  const cats = Object.fromEntries(DATA.mitigation_categories.map(c => [c.id, c]));
+  const itemIndex = {};
+  FW.forEach(f => fw(f).items.forEach(i => itemIndex[f + "|" + i.id] = i));
+  const itemTitle = (f, id) => (itemIndex[f + "|" + id] || {}).title || id;
+
+  // ---------- theme ----------
+  const themeBtn = $("#themeBtn");
+  try { const t = localStorage.getItem("cw-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  themeBtn.onclick = () => {
+    const cur = document.documentElement.dataset.theme ||
+      (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const next = cur === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("cw-theme", next); } catch (e) {}
+    requestAnimationFrame(drawFlowLines);
+  };
+
+  // ---------- filters ----------
+  const state = { sector: "", prio: "high", cat: "", q: "", view: "overview", matrixMode: "ids" };
+  DATA.sectors.forEach(s => $("#fSector").insertAdjacentHTML("beforeend", `<option value="${s.id}">${esc(s.name)}</option>`));
+  DATA.mitigation_categories.forEach(c => $("#fCat").insertAdjacentHTML("beforeend", `<option value="${c.id}">${esc(c.title)}</option>`));
+
+  function matchesSearch(c, q) {
+    if (!q) return true;
+    const hay = [c.id, c.title, c.objective, ...(c.guidance || []), ...(c.evidence || []),
+      ...FW.flatMap(f => (c.maps[f] || []).flatMap(id => [id, itemTitle(f, id)]))].join(" ").toLowerCase();
+    return q.toLowerCase().split(/\s+/).filter(Boolean).every(t => hay.includes(t));
+  }
+  function filteredControls() {
+    return DATA.controls.filter(c =>
+      (!state.sector || RANK[c.sectors[state.sector]] >= RANK[state.prio]) &&
+      (!state.cat || c.category === state.cat) &&
+      matchesSearch(c, state.q));
+  }
+  function coverage(controls) {
+    const out = {};
+    FW.forEach(f => {
+      const covered = new Set(controls.flatMap(c => c.maps[f] || []));
+      const items = fw(f).items;
+      const n = items.filter(i => covered.has(i.id)).length;
+      out[f] = { total: items.length, covered: n, pct: items.length ? 100 * n / items.length : 0,
+                 gaps: items.filter(i => !covered.has(i.id)) };
+    });
+    return out;
+  }
+  function updateNote(n) {
+    const parts = [];
+    if (state.sector) parts.push(`${DATA.sectors.find(s => s.id === state.sector).name} (${state.prio === "low" ? "any" : state.prio === "medium" ? "medium+" : "high"} priority)`);
+    if (state.cat) parts.push(cats[state.cat].title);
+    if (state.q) parts.push(`matching “${state.q}”`);
+    $("#filterNote").textContent = `Showing ${n} of ${DATA.controls.length} controls` + (parts.length ? " · " + parts.join(" · ") : "");
+    $("#fPrio").disabled = !state.sector;
+  }
+  ["#fSector", "#fPrio", "#fCat"].forEach(sel => $(sel).addEventListener("change", e => {
+    state[{ "#fSector": "sector", "#fPrio": "prio", "#fCat": "cat" }[sel]] = e.target.value; render();
+  }));
+  let qTimer; $("#fSearch").addEventListener("input", e => { clearTimeout(qTimer); qTimer = setTimeout(() => { state.q = e.target.value.trim(); render(); }, 150); });
+  $("#resetBtn").onclick = () => {
+    Object.assign(state, { sector: "", prio: "high", cat: "", q: "" });
+    $("#fSector").value = ""; $("#fPrio").value = "high"; $("#fCat").value = ""; $("#fSearch").value = "";
+    render();
+  };
+
+  // ---------- tabs ----------
+  function showView(v) {
+    state.view = v;
+    $$("nav.tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.view === v));
+    $$("section.view").forEach(s => s.classList.toggle("active", s.id === "view-" + v));
+    if (v === "pivot") requestAnimationFrame(drawFlowLines);
+  }
+  $$("nav.tabs button").forEach(b => b.onclick = () => showView(b.dataset.view));
+
+  // ---------- overview ----------
+  function bars(el, rows, max) {
+    el.innerHTML = rows.map(r => `
+      <div class="bar-row" ${r.go ? `data-go="${r.go}"` : ""} title="${esc(r.title || "")}">
+        <div class="bar-label">${r.dot ? `<span class="fw-dot" style="background:${r.dot}"></span>` : ""}${esc(r.label)}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${max ? 100 * r.value / max : 0}%;background:${r.color}"></div></div>
+        <div class="bar-val">${esc(r.text)}</div>
+      </div>`).join("");
+    el.querySelectorAll("[data-go]").forEach(n => n.onclick = () => showView(n.dataset.go));
+  }
+  function renderOverview(ctrls, cov) {
+    const maps = ctrls.reduce((a, c) => a + FW.reduce((b, f) => b + (c.maps[f] || []).length, 0), 0);
+    const totalItems = FW.reduce((a, f) => a + cov[f].total, 0);
+    const coveredItems = FW.reduce((a, f) => a + cov[f].covered, 0);
+    const k = [
+      [ctrls.length, "Unified controls in view"],
+      [FW.length, "Frameworks mapped"],
+      [maps, "Control → requirement mappings"],
+      [`${Math.round(100 * coveredItems / totalItems)}%`, `Items covered (${coveredItems}/${totalItems})`],
+    ];
+    $("#kpis").innerHTML = k.map(([v, l]) => `<div class="card kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join("");
+    bars($("#covBars"), FW.map(f => ({ label: fw(f).short, value: cov[f].pct, color: color(f), dot: color(f), go: "gaps",
+      text: `${cov[f].covered}/${cov[f].total}`, title: fw(f).name })), 100);
+    const catCounts = DATA.mitigation_categories.map(c => ({ label: c.title.replace(" Controls", ""), value: ctrls.filter(x => x.category === c.id).length, color: "var(--accent)" }));
+    const cmax = Math.max(1, ...catCounts.map(c => c.value));
+    bars($("#catBars"), catCounts.map(c => ({ ...c, text: String(c.value) })), cmax);
+    const secCounts = DATA.sectors.map(s => ({ label: s.name.split(" ")[0], value: ctrls.filter(c => c.sectors[s.id] === "high").length, color: "var(--hi)", title: s.name }));
+    const smax = Math.max(1, ...secCounts.map(c => c.value));
+    bars($("#sectorBars"), secCounts.map(c => ({ ...c, text: String(c.value) })), smax);
+    $("#fwCards").innerHTML = FW.map(f => `
+      <div class="card fw-card" style="--c:${color(f)}">
+        <h3><span class="fw-dot" style="background:${color(f)}"></span>${esc(fw(f).name)}</h3>
+        <div class="meta">${esc(fw(f).version || "")} · ${fw(f).items.length} items</div>
+        <a href="${esc(fw(f).source_url)}" target="_blank" rel="noopener">Source ↗</a>
+      </div>`).join("");
+    const sec = state.sector ? DATA.sectors.filter(s => s.id === state.sector) : DATA.sectors;
+    $("#sectorCard").innerHTML = `<h2>Sector context</h2><p class="sub">Orientation only, not legal advice. Select a sector above to filter controls by its priority.</p>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">` + sec.map(s => `
+        <div><h3 style="font-size:14px;margin:0 0 6px">${esc(s.name)}</h3>
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:4px">Example AI use cases</div>
+        <ul style="margin:0 0 8px;padding-left:18px;font-size:13px">${s.example_use_cases.map(u => `<li>${esc(u)}</li>`).join("")}</ul>
+        <div style="font-size:12.5px;color:var(--muted);margin-bottom:4px">Regulatory context</div>
+        <ul style="margin:0 0 8px;padding-left:18px;font-size:13px">${s.regulatory_context.map(u => `<li>${esc(u)}</li>`).join("")}</ul>
+        <div>${s.key_concerns.map(k => `<span class="chip" style="--c:var(--accent)">${esc(k)}</span>`).join("")}</div></div>`).join("") + `</div>`;
+  }
+
+  // ---------- matrix ----------
+  $$("#matrixMode button").forEach(b => b.onclick = () => {
+    state.matrixMode = b.dataset.mode;
+    $$("#matrixMode button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    renderMatrix(filteredControls());
+  });
+  function renderMatrix(ctrls) {
+    const q = state.q.toLowerCase();
+    const head = `<thead><tr><th class="ctrl">Control</th>${FW.map(f => `<th><span class="fw-dot" style="background:${color(f)}"></span>${esc(fw(f).short)}</th>`).join("")}
+      ${DATA.sectors.map(s => `<th>${esc(s.name.split(" ")[0])}</th>`).join("")}</tr></thead>`;
+    const body = ctrls.map(c => `<tr data-id="${c.id}">
+      <td class="ctrl"><span class="id">${c.id}</span><span class="t">${esc(c.title)}</span><span class="cat">${esc(cats[c.category].title)}</span></td>
+      ${FW.map(f => {
+        const ids = c.maps[f] || [];
+        if (state.matrixMode === "count") return `<td style="text-align:center;font-weight:600;color:${ids.length ? color(f) : "var(--muted)"}">${ids.length || "–"}</td>`;
+        return `<td>${ids.map(id => `<span class="chip ${q && (id.toLowerCase().includes(q) || itemTitle(f, id).toLowerCase().includes(q)) ? "hit" : ""}" style="--c:${color(f)}" title="${esc(itemTitle(f, id))}">${esc(id)}</span>`).join("") || `<span style="color:var(--muted)">–</span>`}</td>`;
+      }).join("")}
+      ${DATA.sectors.map(s => `<td><span class="prio ${c.sectors[s.id]}">${c.sectors[s.id]}</span></td>`).join("")}
+    </tr>`).join("");
+    $("#matrix").innerHTML = head + `<tbody>${body || `<tr><td colspan="${FW.length + 4}" class="empty">No controls match the current filters.</td></tr>`}</tbody>`;
+    $("#matrixCount").textContent = `${ctrls.length} control${ctrls.length === 1 ? "" : "s"}`;
+    $$("#matrix tbody tr[data-id]").forEach(tr => tr.onclick = () => openControl(tr.dataset.id));
+  }
+  $("#csvBtn").onclick = () => {
+    const rows = [["control_id", "control_title", "mitigation_category", "framework", "item_id", "item_title", ...DATA.sectors.map(s => "priority_" + s.id)]];
+    filteredControls().forEach(c => FW.forEach(f => (c.maps[f] || []).forEach(id =>
+      rows.push([c.id, c.title, cats[c.category].title, fw(f).short, id, itemTitle(f, id), ...DATA.sectors.map(s => c.sectors[s.id])]))));
+    const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\r\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv" }));
+    a.download = "ai_control_crosswalk_filtered.csv"; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+
+  // ---------- heatmap ----------
+  const heatColor = n => n === 0 ? "var(--heat-0)" : n === 1 ? "var(--heat-1)" : n <= 3 ? "var(--heat-2)" : n <= 6 ? "var(--heat-3)" : "var(--heat-4)";
+  $("#heatLegend").innerHTML = "Items reached: " + [["untreated risk", 0], ["1", 1], ["2–3", 2], ["4–6", 5], ["7+", 8]]
+    .map(([l, n]) => `<span class="sw" style="background:${heatColor(n)}"></span>${l}`).join(" ") +
+    ` <span class="sw" style="background:var(--surface-2)"></span>no items in that framework`;
+  function renderHeatmap(ctrls) {
+    const others = FW.filter(f => f !== "MIT");
+    let lastGroup = "";
+    const rows = fw("MIT").items.map(r => {
+      const via = ctrls.filter(c => (c.maps.MIT || []).includes(r.id));
+      let pre = "";
+      if (r.group !== lastGroup) { lastGroup = r.group; pre = `<tr><td class="domain" colspan="${others.length + 2}">${esc(r.group)}</td></tr>`; }
+      const cells = others.map(f => {
+        const n = new Set(via.flatMap(c => c.maps[f] || [])).size;
+        // A zero here is often expected (e.g. OWASP is security-only), so it is
+        // shown neutral; only an untreated risk (Controls = 0) is flagged red.
+        if (n === 0) return `<td class="cell" style="background:var(--surface-2);color:var(--muted)" title="No ${esc(fw(f).short)} items reached">–</td>`;
+        const strong = n >= 4;
+        return `<td class="cell" style="background:${heatColor(n)};${strong ? "color:#fff" : ""}" title="${n} ${esc(fw(f).short)} item(s)">${n}</td>`;
+      }).join("");
+      const gap = via.length === 0;
+      return pre + `<tr data-risk="${r.id}" ${gap ? `style="--gap:1"` : ""}>
+        <td class="risk" style="${gap ? "box-shadow: inset 4px 0 0 var(--danger)" : ""}"><span class="rid">${r.id.replace("MIT-", "")}</span>${esc(r.title)}${gap ? ` <span class="prio high">gap</span>` : ""}</td>
+        <td class="cell" style="background:${heatColor(via.length)};${via.length >= 4 ? "color:#fff" : ""}">${via.length}</td>${cells}</tr>`;
+    }).join("");
+    $("#heat").innerHTML = `<thead><tr><th class="ctrl">MIT risk subdomain</th><th>Controls</th>${others.map(f => `<th><span class="fw-dot" style="background:${color(f)}"></span>${esc(fw(f).short)}</th>`).join("")}</tr></thead><tbody>${rows}</tbody>`;
+    $$("#heat tr[data-risk]").forEach(tr => tr.onclick = () => openItem("MIT", tr.dataset.risk));
+  }
+
+  // ---------- pivot ----------
+  const pFromFw = $("#pFromFw"), pFromItem = $("#pFromItem"), pToFw = $("#pToFw");
+  FW.forEach(f => {
+    pFromFw.insertAdjacentHTML("beforeend", `<option value="${f}">${esc(fw(f).short)}</option>`);
+    pToFw.insertAdjacentHTML("beforeend", `<option value="${f}">${esc(fw(f).short)}</option>`);
+  });
+  pFromFw.value = "EUAIA"; pToFw.value = "ISO42001";
+  function fillItems(keep) {
+    pFromItem.innerHTML = fw(pFromFw.value).items.map(i => `<option value="${esc(i.id)}">${esc(i.id)} — ${esc(i.title)}</option>`).join("");
+    if (keep && fw(pFromFw.value).items.some(i => i.id === keep)) pFromItem.value = keep;
+  }
+  fillItems("Art.14");
+  pFromFw.onchange = () => { fillItems(); renderPivot(filteredControls()); };
+  pFromItem.onchange = pToFw.onchange = () => renderPivot(filteredControls());
+  $("#pSwap").onclick = () => {
+    const from = pFromFw.value; pFromFw.value = pToFw.value; pToFw.value = from; fillItems(); renderPivot(filteredControls());
+  };
+  function renderPivot(ctrls) {
+    const sf = pFromFw.value, sid = pFromItem.value, tf = pToFw.value;
+    const src = itemIndex[sf + "|" + sid];
+    const via = ctrls.filter(c => (c.maps[sf] || []).includes(sid));
+    const targets = {};
+    via.forEach(c => (c.maps[tf] || []).forEach(t => (targets[t] = targets[t] || []).push(c.id)));
+    const tList = Object.entries(targets).sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0], undefined, { numeric: true }));
+    $("#flow").innerHTML = `
+      <div class="flow-col"><h3>${esc(fw(sf).short)}</h3>
+        <div class="node" style="--c:${color(sf)}" data-node="src" data-open-item="${sf}|${esc(sid)}"><b>${esc(sid)}</b><small>${esc(src.title)}</small></div>
+        <p style="font-size:12.5px;color:var(--muted)">${esc(src.description || "")}</p></div>
+      <div class="flow-col"><h3>Unified controls (${via.length})</h3>
+        ${via.map(c => `<div class="node" style="--c:var(--accent)" data-node="${c.id}" data-open="${c.id}"><b>${c.id}</b><small>${esc(c.title)}</small></div>`).join("") || `<div class="empty">No control in the current filter maps to this item.</div>`}</div>
+      <div class="flow-col"><h3>${esc(fw(tf).short)} (${tList.length})</h3>
+        ${tList.map(([t, cs]) => `<div class="node" style="--c:${color(tf)}" data-node="t:${esc(t)}" data-via="${cs.join(",")}" data-open-item="${tf}|${esc(t)}"><b>${esc(t)}</b><small>${esc(itemTitle(tf, t))}</small></div>`).join("") || `<div class="empty">${sf === tf ? "Pick a different target framework." : "No related items."}</div>`}</div>
+      <svg id="flowSvg"></svg>`;
+    $$("#flow [data-open]").forEach(n => n.onclick = () => openControl(n.dataset.open));
+    $$("#flow [data-open-item]").forEach(n => n.onclick = () => { const [f, i] = n.dataset.openItem.split("|"); openItem(f, i); });
+    requestAnimationFrame(drawFlowLines);
+  }
+  function drawFlowLines() {
+    const svg = $("#flowSvg"); if (!svg || state.view !== "pivot") return;
+    const box = $("#flow").getBoundingClientRect();
+    const pt = (el, side) => { const r = el.getBoundingClientRect(); return [side === "r" ? r.right - box.left : r.left - box.left, r.top - box.top + r.height / 2]; };
+    const curve = ([x1, y1], [x2, y2]) => { const dx = (x2 - x1) / 2; return `M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}`; };
+    const src = $("#flow [data-node=src]");
+    let paths = "";
+    $$("#flow [data-open]").forEach(c => {
+      paths += `<path d="${curve(pt(src, "r"), pt(c, "l"))}"/>`;
+    });
+    $$("#flow [data-via]").forEach(t => t.dataset.via.split(",").forEach(cid => {
+      const c = $(`#flow [data-node="${cid}"]`); if (c) paths += `<path d="${curve(pt(c, "r"), pt(t, "l"))}"/>`;
+    }));
+    svg.innerHTML = paths;
+  }
+  addEventListener("resize", () => requestAnimationFrame(drawFlowLines));
+
+  // ---------- gaps ----------
+  function renderGaps(cov) {
+    const filtered = state.sector || state.cat || state.q;
+    $("#gapIntro").innerHTML = filtered
+      ? "Items not addressed by any control <b>in the current filter</b>. Clear the filters to see gaps in the full control set."
+      : "Items not addressed by any unified control. Gaps in the MIT socioeconomic and AI-welfare subdomains are expected: they are systemic risks that sit largely outside a single organisation's control set, so they are kept visible rather than forced into a mapping.";
+    $("#gapGrid").innerHTML = FW.map(f => `
+      <div class="card" style="border-top:3px solid ${color(f)}">
+        <h2>${esc(fw(f).short)}</h2>
+        <p class="sub">${cov[f].covered}/${cov[f].total} covered (${Math.round(cov[f].pct)}%)</p>
+        ${cov[f].gaps.length ? cov[f].gaps.map(i => `<div class="gap-item"><b>${esc(i.id)}</b>${esc(i.title)}</div>`).join("")
+          : `<div class="ok-msg">✓ No gaps</div>`}
+      </div>`).join("");
+  }
+
+  // ---------- drawer ----------
+  const drawer = $("#drawer"), backdrop = $("#backdrop");
+  function openDrawer(html) { $("#drawerBody").innerHTML = html; drawer.classList.add("open"); backdrop.classList.add("open"); drawer.setAttribute("aria-hidden", "false"); drawer.scrollTop = 0; }
+  function closeDrawer() { drawer.classList.remove("open"); backdrop.classList.remove("open"); drawer.setAttribute("aria-hidden", "true"); }
+  backdrop.onclick = closeDrawer; $("#drawerClose").onclick = closeDrawer;
+  addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+
+  function openControl(id) {
+    const c = DATA.controls.find(x => x.id === id);
+    openDrawer(`
+      <div style="color:var(--muted);font-size:12px;font-weight:600">${c.id} · ${esc(cats[c.category].title)}</div>
+      <h2>${esc(c.title)}</h2>
+      <p>${esc(c.objective)}</p>
+      <h4>Sector priority</h4>
+      <div class="sector-pills">${DATA.sectors.map(s => `<div class="sector-pill">${esc(s.name)}: <span class="prio ${c.sectors[s.id]}">${c.sectors[s.id]}</span>
+        ${c.sector_notes && c.sector_notes[s.id] ? `<div style="font-size:12px;color:var(--muted);margin-top:3px;max-width:220px">${esc(c.sector_notes[s.id])}</div>` : ""}</div>`).join("")}</div>
+      <h4>Implementation guidance</h4><ul>${(c.guidance || []).map(g => `<li>${esc(g)}</li>`).join("")}</ul>
+      <h4>Evidence for audit</h4><ul>${(c.evidence || []).map(g => `<li>${esc(g)}</li>`).join("")}</ul>
+      <h4>Mappings</h4>
+      ${FW.map(f => (c.maps[f] || []).length ? `<div class="map-group"><div style="font-weight:600;font-size:13px"><span class="fw-dot" style="background:${color(f)}"></span>${esc(fw(f).name)}</div>
+        ${(c.maps[f]).map(id => `<div class="item"><span class="chip" style="--c:${color(f)}">${esc(id)}</span>${esc(itemTitle(f, id))}</div>`).join("")}</div>` : "").join("")}
+    `);
+  }
+  function openItem(f, id) {
+    const i = itemIndex[f + "|" + id];
+    const via = DATA.controls.filter(c => (c.maps[f] || []).includes(id));
+    openDrawer(`
+      <div style="color:var(--muted);font-size:12px;font-weight:600"><span class="fw-dot" style="background:${color(f)}"></span>${esc(fw(f).name)}</div>
+      <h2>${esc(id)} — ${esc(i.title)}</h2>
+      ${i.group ? `<div style="color:var(--muted);font-size:12.5px">${esc(i.group)}</div>` : ""}
+      <p>${esc(i.description || "")}</p>
+      <h4>Treated by ${via.length} unified control${via.length === 1 ? "" : "s"}</h4>
+      ${via.map(c => `<div class="node" style="--c:var(--accent)" data-open="${c.id}"><b>${c.id}</b><small>${esc(c.title)}</small></div>`).join("") || `<div class="empty">No control maps to this item — a coverage gap.</div>`}
+      <h4>Source</h4><a href="${esc(fw(f).source_url)}" target="_blank" rel="noopener">${esc(fw(f).source_url)} ↗</a>
+    `);
+    $$("#drawerBody [data-open]").forEach(n => n.onclick = () => openControl(n.dataset.open));
+  }
+
+  // ---------- render ----------
+  function render() {
+    const ctrls = filteredControls();
+    const cov = coverage(ctrls);
+    updateNote(ctrls.length);
+    renderOverview(ctrls, cov);
+    renderMatrix(ctrls);
+    renderHeatmap(ctrls);
+    renderPivot(ctrls);
+    renderGaps(cov);
+  }
+  $("#footer").innerHTML = `Dataset v${esc(DATA.meta.dataset_version)} · built ${esc(DATA.meta.built)} ·
+    Mappings are analyst judgement ("supports / contributes to"), not official equivalences from the framework owners.
+    Framework names and identifiers belong to their owners; descriptions are paraphrased. ISO/IEC 42001 control text is not reproduced.`;
+  render();
+})();
+</script>
+</body>
+</html>

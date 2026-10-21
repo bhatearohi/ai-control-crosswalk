@@ -1,0 +1,21 @@
+id: OWASP-ASI
+name: OWASP Top 10 for Agentic Applications 2026
+short: OWASP Agentic
+kind: risk
+version: "2026 (first edition, December 2025)"
+source_url: https://genai.owasp.org/
+licence_note: >-
+  Risk names from the OWASP GenAI Security Project (Agentic Security Initiative).
+  Descriptions are paraphrased for this project. Verify titles against the official
+  release before relying on them.
+items:
+  - {id: ASI01, title: "Agent Goal Hijack", description: "Untrusted content redirects an agent's objectives or plan."}
+  - {id: ASI02, title: "Tool Misuse and Exploitation", description: "An agent uses legitimate tools in unsafe or unintended ways."}
+  - {id: ASI03, title: "Identity and Privilege Abuse", description: "Agent credentials, delegated authority or non-human identities are abused."}
+  - {id: ASI04, title: "Agentic Supply Chain Vulnerabilities", description: "Compromised tools, plugins, MCP servers or agent components."}
+  - {id: ASI05, title: "Unexpected Code Execution", description: "Agents generate or run code that leads to unintended execution."}
+  - {id: ASI06, title: "Memory and Context Poisoning", description: "Persistent memory or retrieved context is manipulated to steer future behaviour."}
+  - {id: ASI07, title: "Insecure Inter-Agent Communication", description: "Messages between agents are spoofed, intercepted or unauthenticated."}
+  - {id: ASI08, title: "Cascading Failures", description: "One agent's fault propagates across connected agents and systems."}
+  - {id: ASI09, title: "Human-Agent Trust Exploitation", description: "Users' trust in agents is exploited to gain approval for harmful actions."}
+  - {id: ASI10, title: "Rogue Agents", description: "Agents drift, collude or act harmfully beyond their intended scope."}

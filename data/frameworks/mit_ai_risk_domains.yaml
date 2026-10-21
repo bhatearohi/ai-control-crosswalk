@@ -1,0 +1,35 @@
+id: MIT
+name: MIT AI Risk Repository - Domain Taxonomy
+short: MIT Risk Domains
+kind: risk
+version: "Domain Taxonomy (7 domains, 24 subdomains)"
+source_url: https://airisk.mit.edu/
+licence_note: >-
+  Taxonomy structure from the MIT AI Risk Initiative (MIT FutureTech / University of
+  Queensland). Subdomain descriptions in this file are paraphrased summaries written
+  for this project. Check airisk.mit.edu for the current version and licence terms.
+items:
+  - {id: MIT-1.1, group: "1. Discrimination & Toxicity", title: "Unfair discrimination and misrepresentation", description: "AI treats people or groups unequally or misrepresents them, often reflecting biased data or design."}
+  - {id: MIT-1.2, group: "1. Discrimination & Toxicity", title: "Exposure to toxic content", description: "AI produces or exposes people to harmful, abusive or inappropriate content."}
+  - {id: MIT-1.3, group: "1. Discrimination & Toxicity", title: "Unequal performance across groups", description: "AI accuracy or quality differs materially between demographic or user groups."}
+  - {id: MIT-2.1, group: "2. Privacy & Security", title: "Compromise of privacy", description: "AI obtains, leaks or infers sensitive personal information without appropriate consent."}
+  - {id: MIT-2.2, group: "2. Privacy & Security", title: "AI system security vulnerabilities and attacks", description: "Weaknesses in models, data, software or infrastructure that attackers can exploit."}
+  - {id: MIT-3.1, group: "3. Misinformation", title: "False or misleading information", description: "AI generates inaccurate content that people may rely on or spread."}
+  - {id: MIT-3.2, group: "3. Misinformation", title: "Pollution of information ecosystem", description: "Large volumes of AI content degrade shared information quality and trust."}
+  - {id: MIT-4.1, group: "4. Malicious Actors & Misuse", title: "Disinformation, surveillance and influence at scale", description: "AI used deliberately to manipulate opinion or monitor people at scale."}
+  - {id: MIT-4.2, group: "4. Malicious Actors & Misuse", title: "Cyberattacks, weapon development and mass harm", description: "AI used to plan or amplify attacks, including cyber offence or weapons."}
+  - {id: MIT-4.3, group: "4. Malicious Actors & Misuse", title: "Fraud, scams and targeted manipulation", description: "AI used to deceive individuals for gain, e.g. deepfakes or tailored phishing."}
+  - {id: MIT-5.1, group: "5. Human-Computer Interaction", title: "Overreliance and unsafe use", description: "People trust or depend on AI beyond its actual reliability."}
+  - {id: MIT-5.2, group: "5. Human-Computer Interaction", title: "Loss of human agency and autonomy", description: "Decisions shift to AI in ways that reduce meaningful human choice or control."}
+  - {id: MIT-6.1, group: "6. Socioeconomic & Environmental", title: "Power centralisation and unfair distribution of benefits", description: "AI concentrates economic or political power with a small number of actors."}
+  - {id: MIT-6.2, group: "6. Socioeconomic & Environmental", title: "Increased inequality and decline in employment quality", description: "AI widens inequality or degrades job quality and security."}
+  - {id: MIT-6.3, group: "6. Socioeconomic & Environmental", title: "Economic and cultural devaluation of human effort", description: "AI reduces the value placed on human work and creativity."}
+  - {id: MIT-6.4, group: "6. Socioeconomic & Environmental", title: "Competitive dynamics", description: "Race dynamics push developers to cut corners on safety."}
+  - {id: MIT-6.5, group: "6. Socioeconomic & Environmental", title: "Governance failure", description: "Rules, oversight and institutions fail to keep pace with AI risk."}
+  - {id: MIT-6.6, group: "6. Socioeconomic & Environmental", title: "Environmental harm", description: "AI development and use consume energy, water and materials with ecological impact."}
+  - {id: MIT-7.1, group: "7. AI System Safety, Failures & Limitations", title: "AI pursuing its own goals in conflict with human goals", description: "AI behaves in ways misaligned with the intent or values of the people it serves."}
+  - {id: MIT-7.2, group: "7. AI System Safety, Failures & Limitations", title: "AI possessing dangerous capabilities", description: "AI has capabilities (e.g. deception, autonomy) that could cause severe harm."}
+  - {id: MIT-7.3, group: "7. AI System Safety, Failures & Limitations", title: "Lack of capability or robustness", description: "AI fails under normal or unusual conditions, producing errors or unsafe outputs."}
+  - {id: MIT-7.4, group: "7. AI System Safety, Failures & Limitations", title: "Lack of transparency or interpretability", description: "It is hard to understand, explain or audit why AI behaves as it does."}
+  - {id: MIT-7.5, group: "7. AI System Safety, Failures & Limitations", title: "AI welfare and rights", description: "Ethical questions about the moral status and treatment of AI systems."}
+  - {id: MIT-7.6, group: "7. AI System Safety, Failures & Limitations", title: "Multi-agent risks", description: "Harms arising from interactions between multiple AI agents or systems."}
